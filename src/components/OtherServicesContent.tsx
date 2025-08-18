@@ -136,7 +136,7 @@ const OtherServicesContent = () => {
       ],
       includedTools: "AWS EC2, S3, Lambda, Azure DevOps, Google Firebase, Kubernetes, Helm",
       color: "accent",
-      image: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/premium-photo/cloud-computing-technology-online-data-storage-business-network-concept_31965-6612.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'networking',
@@ -153,7 +153,7 @@ const OtherServicesContent = () => {
       ],
       compliance: "HIPAA, ISO 27001, PCI-DSS",
       color: "primary",
-      image: "https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/premium-photo/network-cables-connected-network-switches_91566-359.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'data-analytics',
@@ -170,7 +170,7 @@ const OtherServicesContent = () => {
       ],
       results: "Higher data trust, improved forecasting, and strategic alignment across departments.",
       color: "secondary",
-      image: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/free-photo/paper-analysis_1098-15678.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'rpa',

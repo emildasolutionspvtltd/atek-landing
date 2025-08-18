@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { 
-  BookOpen, TrendingUp, Cloud, Code, BarChart3, Lightbulb, 
+import {
+  BookOpen, TrendingUp, Cloud, Code, BarChart3, Lightbulb,
   Download, Mail, ArrowRight, Star, Target, Zap, Settings,
   Database, Globe, Users, FileText, CheckCircle, Sparkles,
   Brain, Cpu, Network, Shield, Activity, PieChart
@@ -154,7 +154,7 @@ const InsightsContent = () => {
               <Star className="h-4 w-4 text-secondary-600" />
               <span className="text-xs sm:text-sm font-semibold text-secondary-700">Why Follow Our Content?</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Expert Insights <span className="bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">That Matter</span>
             </h2>
@@ -162,22 +162,22 @@ const InsightsContent = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {whyFollowReasons.map((reason, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="animate-on-scroll group relative bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft hover:shadow-large transition-all duration-500 hover:-translate-y-2 border border-neutral-200/50"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Gradient Border Effect */}
                 <div className={`absolute inset-0 bg-gradient-to-br from-${reason.color}-500/20 to-${reason.color}-600/20 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}></div>
-                
+
                 <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-${reason.color}-500 to-${reason.color}-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-medium group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 mb-6`}>
                   {reason.icon}
                 </div>
-                
+
                 <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 group-hover:text-primary-700 transition-colors duration-300 mb-3 sm:mb-4">
                   {reason.title}
                 </h3>
-                
+
                 <p className="text-neutral-600 leading-relaxed text-base sm:text-lg">
                   {reason.description}
                 </p>
@@ -190,43 +190,47 @@ const InsightsContent = () => {
       {/* Featured Topics */}
       <section id="featured-topics" className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-secondary-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <div className="animate-on-scroll inline-flex items-center space-x-2 bg-accent-100/80 backdrop-blur-sm border border-accent-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
               <TrendingUp className="h-4 w-4 text-accent-600" />
               <span className="text-xs sm:text-sm font-semibold text-accent-700">Featured Topics</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Latest <span className="bg-gradient-to-r from-accent-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Articles & Insights</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            {topicCategories.map((category, index) => (
-              <div 
-                key={index} 
-                className="animate-on-scroll group relative bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft hover:shadow-large transition-all duration-500 hover:-translate-y-2 border border-neutral-200/50"
+            {topicCategories.map((category, index, arr) => (
+              <div
+                key={index}
+                className={[
+                  "animate-on-scroll group relative bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft hover:shadow-large transition-all duration-500 hover:-translate-y-2 border border-neutral-200/50",
+                  // if odd total and this is the last card → center it
+                  arr.length % 2 !== 0 && index === arr.length - 1 ? "lg:col-span-2 lg:mx-auto lg:max-w-xl" : ""
+                ].join(" ")}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Gradient Border Effect */}
                 <div className={`absolute inset-0 bg-gradient-to-br from-${category.color}-500/20 to-${category.color}-600/20 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}></div>
-                
+
                 <div className="flex flex-col items-start space-y-6">
                   <div className={`w-16 h-16 bg-gradient-to-br from-${category.color}-500 to-${category.color}-600 rounded-2xl flex items-center justify-center text-white shadow-medium group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
                     {category.icon}
                   </div>
-                  
+
                   <div className="flex-1">
                     <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 group-hover:text-primary-700 transition-colors duration-300 mb-3 sm:mb-4">
                       {category.title}
                     </h3>
-                    
+
                     <p className="text-neutral-600 leading-relaxed mb-4 sm:mb-6 text-base sm:text-lg">
                       {category.description}
                     </p>
-                    
+
                     <div className="space-y-3">
                       {category.articles.map((article, articleIndex) => (
                         <div key={articleIndex} className="flex items-start space-x-3 group cursor-pointer">
@@ -242,13 +246,14 @@ const InsightsContent = () => {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
       {/* Resource Library */}
       <section id="resource-library" className="py-16 sm:py-20 bg-white relative overflow-hidden">
         <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-br from-primary-200/30 to-secondary-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-secondary-200/30 to-accent-200/30 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-secondary-200/30 to-accent-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
@@ -256,21 +261,21 @@ const InsightsContent = () => {
               <Download className="h-4 w-4 text-primary-600" />
               <span className="text-xs sm:text-sm font-semibold text-primary-700">Resource Library</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Downloadable <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Guides & Toolkits</span>
             </h2>
-            
+
             <p className="animate-on-scroll text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
-              We also offer downloadable guides, whitepapers, and toolkits designed to help you plan, 
+              We also offer downloadable guides, whitepapers, and toolkits designed to help you plan,
               implement, and optimize your IT operations.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularDownloads.map((download, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="animate-on-scroll group bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 cursor-pointer"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -306,18 +311,18 @@ const InsightsContent = () => {
       {/* Newsletter Signup */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-primary-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="animate-on-scroll inline-flex items-center space-x-2 bg-secondary-100/80 backdrop-blur-sm border border-secondary-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
               <Mail className="h-4 w-4 text-secondary-600" />
               <span className="text-xs sm:text-sm font-semibold text-secondary-700">Stay Updated</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 px-2 sm:px-0">
               Join Our <span className="bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Newsletter</span>
             </h2>
-            
+
             <p className="animate-on-scroll text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Stay informed with bi-weekly updates on the latest tools, use cases, and ideas from the ATEK IT team.
             </p>
@@ -362,13 +367,13 @@ const InsightsContent = () => {
               <Users className="h-4 w-4 text-accent-600" />
               <span className="text-xs sm:text-sm font-semibold text-accent-700">Collaborate With Us</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 px-2 sm:px-0">
               Want to Contribute or <span className="bg-gradient-to-r from-accent-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Collaborate</span>?
             </h2>
-            
+
             <p className="animate-on-scroll text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
-              We welcome guest contributions, thought leadership pieces, and client stories. If you're an 
+              We welcome guest contributions, thought leadership pieces, and client stories. If you're an
               industry expert, a happy customer, or a tech writer—we'd love to hear from you.
             </p>
           </div>
@@ -391,7 +396,7 @@ const InsightsContent = () => {
       {/* Footer CTA */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-900 to-primary-900 text-white relative overflow-hidden">
         <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -400,7 +405,7 @@ const InsightsContent = () => {
           <p className="text-xl text-white/90 mb-8">
             Frisco, TX | Serving Clients Globally
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/"
@@ -411,7 +416,7 @@ const InsightsContent = () => {
                 <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </div>
             </a>
-            
+
             <a
               href="/services"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
@@ -421,7 +426,7 @@ const InsightsContent = () => {
                 <Settings className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
               </div>
             </a>
-            
+
             <a
               href="/contact"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"

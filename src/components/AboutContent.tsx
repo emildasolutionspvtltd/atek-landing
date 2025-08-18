@@ -51,7 +51,7 @@ const AboutContent = () => {
       icon: <Code className="h-6 w-6" />
     },
     {
-      imageSrc: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      imageSrc: "https://img.freepik.com/premium-photo/creative-visual-technology-network-creative-visual-technology-network_31965-16789.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80",
       title: "Cloud Services",
       description: "We design and manage secure, scalable cloud environments across AWS, Azure, and Google Cloud, with automated provisioning, backup, and cost-effective resource allocation.",
       color: "primary",
@@ -65,14 +65,14 @@ const AboutContent = () => {
       icon: <Zap className="h-6 w-6" />
     },
     {
-      imageSrc: "https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      imageSrc: "https://img.freepik.com/free-photo/young-man-working-ethernet-switch_23-2148323494.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80",
       title: "Networking & Infrastructure",
       description: "We plan, configure, and optimize secure, high-availability networks for enterprise environments—integrating automation and analytics to support uninterrupted business operations.",
       color: "accent",
       icon: <Network className="h-6 w-6" />
     },
     {
-      imageSrc: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      imageSrc: "https://img.freepik.com/premium-photo/focused-millennial-business-man-analyzing-marketing-reports-desktop-monitor-reviewing-paper-graphs-financial-stats-startup-project-infographics-marketer-working-from-home-office-back-view_656932-4083.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80",
       title: "Data Analytics & Insights",
       description: "Leverage data to make informed decisions with our analytics and visualization solutions—featuring real-time dashboards, reporting tools, and predictive analytics aligned with business KPIs.",
       color: "primary",

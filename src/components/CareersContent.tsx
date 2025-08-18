@@ -312,24 +312,36 @@ const CareersContent = () => {
 
           {/* Software & Development Roles */}
           <div className="mb-12">
-            <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
-              <Code className="h-6 w-6 text-primary-600 mr-3" />
-              Software & Development Roles
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {softwareRoles.map((role, index) => (
-                <div 
-                  key={index} 
-                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                  style={{ animationDelay: `${index * 0.05}s` }}
+  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
+    <Code className="h-6 w-6 text-primary-600 mr-3" />
+    Software & Development Roles
+  </h3>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {softwareRoles.map((role, index, arr) => {
+      const remainder = arr.length % 3;
+      const isSecondLast = index === arr.length - 2;
+      const isLast = index === arr.length - 1;
+
+      // ✅ Handle last 2
+      if (remainder === 2 && isSecondLast) {
+        const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
+        return (
+          <div key="last-two" className="lg:col-span-3 hidden lg:block">
+            <div className="flex justify-center gap-4">
+              {lastTwo.map((r, i) => (
+                <div
+                  key={i}
+                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
+                  style={{ animationDelay: `${(arr.length - 2 + i) * 0.05}s` }}
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                      <p className="text-gray-600 text-sm">{role.description}</p>
+                      <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
+                      <p className="text-gray-600 text-sm">{r.description}</p>
                     </div>
                     <button
-                      onClick={() => openModal(role.title)}
+                      onClick={() => openModal(r.title)}
                       className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
                     >
                       Apply Now
@@ -339,27 +351,95 @@ const CareersContent = () => {
               ))}
             </div>
           </div>
+        );
+      }
+
+      // skip the last card (since it's in lastTwo above)
+      if (remainder === 2 && isLast) return null;
+
+      // ✅ Handle last 1
+      if (remainder === 1 && isLast) {
+        return (
+          <div key="last-one" className="lg:col-span-3 flex justify-center">
+            <div
+              className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+                  <p className="text-gray-600 text-sm">{role.description}</p>
+                </div>
+                <button
+                  onClick={() => openModal(role.title)}
+                  className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
+                >
+                  Apply Now
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ✅ Normal items
+      return (
+        <div
+          key={index}
+          className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+          style={{ animationDelay: `${index * 0.05}s` }}
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+              <p className="text-gray-600 text-sm">{role.description}</p>
+            </div>
+            <button
+              onClick={() => openModal(role.title)}
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
+            >
+              Apply Now
+            </button>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
 
           {/* Engineering & Infrastructure */}
           <div className="mb-12">
-            <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
-              <Cloud className="h-6 w-6 text-secondary-600 mr-3" />
-              Engineering & Infrastructure
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {engineeringRoles.map((role, index) => (
-                <div 
-                  key={index} 
-                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                  style={{ animationDelay: `${index * 0.05}s` }}
+  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
+    <Cloud className="h-6 w-6 text-secondary-600 mr-3" />
+    Engineering & Infrastructure
+  </h3>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {engineeringRoles.map((role, index, arr) => {
+      const remainder = arr.length % 3;
+      const isSecondLast = index === arr.length - 2;
+      const isLast = index === arr.length - 1;
+
+      // ✅ Handle last 2
+      if (remainder === 2 && isSecondLast) {
+        const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
+        return (
+          <div key="last-two" className="lg:col-span-3 hidden lg:block">
+            <div className="flex justify-center gap-4">
+              {lastTwo.map((r, i) => (
+                <div
+                  key={i}
+                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
+                  style={{ animationDelay: `${(arr.length - 2 + i) * 0.05}s` }}
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                      <p className="text-gray-600 text-sm">{role.description}</p>
+                      <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
+                      <p className="text-gray-600 text-sm">{r.description}</p>
                     </div>
                     <button
-                      onClick={() => openModal(role.title)}
+                      onClick={() => openModal(r.title)}
                       className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
                     >
                       Apply Now
@@ -369,6 +449,62 @@ const CareersContent = () => {
               ))}
             </div>
           </div>
+        );
+      }
+
+      // skip the last card (since it's in lastTwo above)
+      if (remainder === 2 && isLast) return null;
+
+      // ✅ Handle last 1
+      if (remainder === 1 && isLast) {
+        return (
+          <div key="last-one" className="lg:col-span-3 flex justify-center">
+            <div
+              className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+                  <p className="text-gray-600 text-sm">{role.description}</p>
+                </div>
+                <button
+                  onClick={() => openModal(role.title)}
+                  className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
+                >
+                  Apply Now
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ✅ Normal cards
+      return (
+        <div
+          key={index}
+          className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+          style={{ animationDelay: `${index * 0.05}s` }}
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+              <p className="text-gray-600 text-sm">{role.description}</p>
+            </div>
+            <button
+              onClick={() => openModal(role.title)}
+              className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
+            >
+              Apply Now
+            </button>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
 
           {/* Other Roles */}
           <div className="mb-12">

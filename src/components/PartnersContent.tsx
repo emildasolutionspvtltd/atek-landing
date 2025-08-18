@@ -230,24 +230,73 @@ const PartnersContent = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {partnerTypes.map((partner, index) => (
-              <div 
-                key={index} 
-                className="animate-on-scroll bg-white rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                style={{ animationDelay: `${index * 0.1}s` }}
+  {partnerTypes.map((partner, index, arr) => {
+    const remainder = arr.length % 3;
+    const isSecondLast = index === arr.length - 2;
+    const isLast = index === arr.length - 1;
+
+    // ✅ Handle last 2 items → center them
+    if (remainder === 2 && isSecondLast) {
+      const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
+      return (
+        <div key="last-two" className="lg:col-span-3 hidden lg:block">
+          <div className="flex justify-center gap-6">
+            {lastTwo.map((p, i) => (
+              <div
+                key={i}
+                className="animate-on-scroll bg-white rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-sm"
+                style={{ animationDelay: `${(arr.length - 2 + i) * 0.1}s` }}
               >
-                <div className={`w-12 h-12 bg-${partner.color}-100 rounded-lg flex items-center justify-center mb-6`}>
-                  <div className={`text-${partner.color}-600`}>
-                    {partner.icon}
-                  </div>
+                <div className={`w-12 h-12 bg-${p.color}-100 rounded-lg flex items-center justify-center mb-6`}>
+                  <div className={`text-${p.color}-600`}>{p.icon}</div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{partner.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {partner.description}
-                </p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{p.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{p.description}</p>
               </div>
             ))}
           </div>
+        </div>
+      );
+    }
+
+    // Skip rendering the last card (since it was included above)
+    if (remainder === 2 && isLast) return null;
+
+    // ✅ Handle single leftover item → center it
+    if (remainder === 1 && isLast) {
+      return (
+        <div key="last-one" className="lg:col-span-3 flex justify-center">
+          <div
+            className="animate-on-scroll bg-white rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-sm"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className={`w-12 h-12 bg-${partner.color}-100 rounded-lg flex items-center justify-center mb-6`}>
+              <div className={`text-${partner.color}-600`}>{partner.icon}</div>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">{partner.title}</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">{partner.description}</p>
+          </div>
+        </div>
+      );
+    }
+
+    // ✅ Normal items
+    return (
+      <div
+        key={index}
+        className="animate-on-scroll bg-white rounded-xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+        style={{ animationDelay: `${index * 0.1}s` }}
+      >
+        <div className={`w-12 h-12 bg-${partner.color}-100 rounded-lg flex items-center justify-center mb-6`}>
+          <div className={`text-${partner.color}-600`}>{partner.icon}</div>
+        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">{partner.title}</h3>
+        <p className="text-gray-600 text-sm leading-relaxed">{partner.description}</p>
+      </div>
+    );
+  })}
+</div>
+
         </div>
       </section>
 

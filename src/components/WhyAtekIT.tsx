@@ -102,33 +102,39 @@ const WhyAtekIT = () => {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
-          {features.map((feature, index) => (
-            <div 
-              key={index} 
-              className="animate-on-scroll group relative bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft hover:shadow-large transition-all duration-500 hover:-translate-y-2 border border-neutral-200/50"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Gradient Border Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-${feature.color}-500/20 to-${feature.color}-600/20 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}></div>
-              
-              <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                <div className={`flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-${feature.color}-500 to-${feature.color}-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-medium group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-                  {feature.icon}
-                </div>
-                
-                <div className="flex-1">
-                  <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 group-hover:text-primary-700 transition-colors duration-300 mb-3 sm:mb-4">
-                    {feature.title}
-                  </h3>
-                  
-                  <p className="text-neutral-600 leading-relaxed text-base sm:text-lg">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+  {features.map((feature, index) => (
+    <div
+      key={index}
+      className={`animate-on-scroll group relative bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-soft hover:shadow-large transition-all duration-500 hover:-translate-y-2 border border-neutral-200/50 
+        ${features.length % 2 !== 0 && index === features.length - 1 ? "lg:col-span-2 lg:mx-auto lg:w-1/2" : ""}`}
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      {/* Gradient Border Effect */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-br from-${feature.color}-500/20 to-${feature.color}-600/20 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10`}
+      ></div>
+
+      <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+        <div
+          className={`flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-${feature.color}-500 to-${feature.color}-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-medium group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
+        >
+          {feature.icon}
         </div>
+
+        <div className="flex-1">
+          <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 group-hover:text-primary-700 transition-colors duration-300 mb-3 sm:mb-4">
+            {feature.title}
+          </h3>
+
+          <p className="text-neutral-600 leading-relaxed text-base sm:text-lg">
+            {feature.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
 
         {/* Bottom CTA Section */}
         <div className="animate-on-scroll text-center bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-700 rounded-2xl sm:rounded-3xl p-8 sm:p-12 shadow-large">

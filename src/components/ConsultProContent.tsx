@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { 
-  Clock, Users, DollarSign, FileText, Bell, BarChart3, Shield, 
-  CheckCircle, Star, Target, TrendingUp, Zap, Settings, 
+import {
+  Clock, Users, DollarSign, FileText, Bell, BarChart3, Shield,
+  CheckCircle, Star, Target, TrendingUp, Zap, Settings,
   Calendar, CreditCard, Download, Mail, Phone, MapPin,
   ArrowRight, Sparkles, Cloud, Database, Smartphone,
   PieChart, Activity, Globe, Lock, Lightbulb
@@ -32,7 +32,7 @@ const ConsultProContent = () => {
 
   const targetAudience = [
     "IT & Engineering Consulting Firms",
-    "Staffing & Recruitment Agencies", 
+    "Staffing & Recruitment Agencies",
     "Professional Services Companies",
     "Digital & Creative Agencies",
     "HR & Outsourcing Firms"
@@ -48,7 +48,7 @@ const ConsultProContent = () => {
     },
     {
       icon: <Users className="h-6 w-6" />,
-      title: "Client & Project Management", 
+      title: "Client & Project Management",
       description: "Add unlimited clients and assign multiple projects with custom billing rates.",
       features: ["Unlimited clients & projects", "Custom billing rates", "Real-time visibility"],
       color: "secondary"
@@ -97,7 +97,7 @@ const ConsultProContent = () => {
       description: "Comprehensive visa management system with automated reminders, secure document handling, and centralized employee profiles for complete immigration status tracking.",
       features: [
         "Reminders for crucial milestones (e.g., the end of validity periods)",
-        "Secure document uploads with built-in compliance checklists", 
+        "Secure document uploads with built-in compliance checklists",
         "A unique centralized employee profile with immigration status at every step of the process"
       ],
       color: "primary"
@@ -130,7 +130,7 @@ const ConsultProContent = () => {
     },
     {
       icon: <Settings className="h-6 w-6" />,
-      title: "Highly Configurable", 
+      title: "Highly Configurable",
       description: "Adapts to your workflows, not the other way around"
     },
     {
@@ -157,7 +157,7 @@ const ConsultProContent = () => {
       description: "Understand your team structure, billing rules, and preferred integration needs."
     },
     {
-      day: "Day 3-5", 
+      day: "Day 3-5",
       title: "Configuration & Access Setup",
       description: "Define roles, assign user permissions, and configure project/client mappings."
     },
@@ -168,7 +168,7 @@ const ConsultProContent = () => {
     },
     {
       day: "Day 6-7",
-      title: "Training & Handover", 
+      title: "Training & Handover",
       description: "Walkthroughs for Admin, Consultant, and Client roles with detailed documentation."
     }
   ];
@@ -181,7 +181,7 @@ const ConsultProContent = () => {
       color: "primary"
     },
     {
-      title: "Global Staffing Agency", 
+      title: "Global Staffing Agency",
       result: "Automated timesheet entry across 100+ consultants",
       icon: <Users className="h-8 w-8" />,
       color: "secondary"
@@ -200,7 +200,7 @@ const ConsultProContent = () => {
       <div className="relative overflow-hidden min-h-screen bg-[url('/MacBook-Mockup-Floating.png')] bg-cover bg-center bg-no-repeat">
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-gray-800/60 to-primary-900/70"></div>
-        
+
         <section className="relative z-10 pt-24 pb-16">
           <div className="relative max-w-8xl mx-auto px-6 lg:px-8">
             <div className="text-center">
@@ -225,17 +225,17 @@ const ConsultProContent = () => {
                   Streamline Your Consulting Operations
                 </span>
               </h1>
-              
+
               {/* Subtitle */}
               <h2 className="animate-on-scroll text-2xl md:text-3xl lg:text-4xl font-semibold text-cyan-300 mb-8 drop-shadow-md">
                 A Smarter Way to Manage Time, Clients, Invoicing & Payroll
               </h2>
-              
+
               {/* Description */}
               <div className="animate-on-scroll max-w-5xl mx-auto mb-14 space-y-8">
                 <p className="text-xl md:text-2xl text-gray-200 leading-relaxed font-light drop-shadow-sm">
-                  Pay Pilot is an all-in-one consultant operations management platform developed by <span className="font-serif-display font-semibold"> ATEK IT </span> 
-                   to help IT consulting firms, professional services agencies, and staffing companies streamline 
+                  Pay Pilot is an all-in-one consultant operations management platform developed by <span className="font-serif-display font-semibold"> ATEK IT </span>
+                  to help IT consulting firms, professional services agencies, and staffing companies streamline
                   their back-office processes.
                 </p>
                 <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-white/30 shadow-soft">
@@ -257,9 +257,9 @@ const ConsultProContent = () => {
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-secondary-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                 </a>
-                
+
                 <a
-                  href="#features" 
+                  href="#features"
                   className="group bg-white/90 backdrop-blur-sm border-2 border-white/30 text-gray-800 px-10 py-5 rounded-2xl font-semibold text-lg shadow-medium hover:shadow-large hover:bg-white transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="flex items-center space-x-3">
@@ -291,7 +291,7 @@ const ConsultProContent = () => {
               <Activity className="h-4 w-4 text-primary-600" />
               <span className="text-xs sm:text-sm font-semibold text-primary-700">Platform Preview</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-900 mb-6 sm:mb-8 leading-tight px-2 sm:px-0">
               See <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent font-serif-display font-normal italic"> Pay Pilot </span> in Action
             </h2>
@@ -302,7 +302,7 @@ const ConsultProContent = () => {
             {/* Desktop Dashboard */}
             <div className="animate-on-scroll">
               <div className="bg-gradient-to-br from-primary-50/30 to-secondary-50/30 rounded-2xl sm:rounded-3xl overflow-hidden shadow-large">
-                <img 
+                <img
                   src="/Screenshot-2025-08-08-094954.png"
                   alt="Pay Pilot Admin Dashboard Interface"
                   className="w-full h-80 object-cover"
@@ -317,8 +317,8 @@ const ConsultProContent = () => {
             {/* Mobile App */}
             <div className="animate-on-scroll">
               <div className="bg-gradient-to-br from-secondary-50/30 to-accent-50/30 rounded-2xl sm:rounded-3xl overflow-hidden shadow-large">
-                <img 
-                  src="https://images.pexels.com/photos/147413/twitter-facebook-together-exchange-of-information-147413.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                <img
+                  src="/mobileView.png"
                   alt="ConsultPro Mobile Application"
                   className="w-full h-80 object-cover"
                 />
@@ -335,22 +335,22 @@ const ConsultProContent = () => {
       {/* Built by Consultants Section */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-primary-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <div className="animate-on-scroll inline-flex items-center space-x-2 bg-secondary-100/80 backdrop-blur-sm border border-secondary-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
               <Lightbulb className="h-4 w-4 text-secondary-600" />
               <span className="text-xs sm:text-sm font-semibold text-secondary-700">Our Philosophy</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Built by <span className="bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Consultants</span>, for Consultants
             </h2>
-            
+
             <div className="animate-on-scroll max-w-4xl mx-auto space-y-6">
               <p className="text-lg md:text-xl text-neutral-600 leading-relaxed">
-                Running a professional services business shouldn't mean juggling spreadsheets, chasing 
-                timesheets, or manually tracking payments. With ConsultPro, you get an intelligent system 
+                Running a professional services business shouldn't mean juggling spreadsheets, chasing
+                timesheets, or manually tracking payments. With ConsultPro, you get an intelligent system
                 designed to automate and simplify every step—from logging hours to generating payroll.
               </p>
             </div>
@@ -382,17 +382,20 @@ const ConsultProContent = () => {
               <Settings className="h-4 w-4 text-accent-600" />
               <span className="text-xs sm:text-sm font-semibold text-accent-700">Core Features</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Everything You Need in <span className="bg-gradient-to-r from-accent-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">One Platform</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            {[...coreFeatures, ...additionalFeatures].map((feature, index) => (
-              <div 
-                key={index} 
-                className="animate-on-scroll group relative bg-white rounded-2xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+            {[...coreFeatures, ...additionalFeatures].map((feature, index, arr) => (
+              <div
+                key={index}
+                className={cn(
+                  "animate-on-scroll group relative bg-white rounded-2xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100",
+                  arr.length % 2 !== 0 && index === arr.length - 1 && "lg:col-span-2 lg:mx-auto lg:w-1/2"
+                )}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-start space-x-4">
@@ -407,12 +410,14 @@ const ConsultProContent = () => {
                     <div className="space-y-2">
                       {feature.features.map((item, itemIndex) => (
                         <div key={itemIndex} className="flex items-center space-x-2">
-                          <div className={cn(
-                            "w-2 h-2 rounded-full flex-shrink-0 mt-1",
-                            feature.color === "primary" && "bg-primary-600",
-                            feature.color === "secondary" && "bg-secondary-600",
-                            feature.color === "accent" && "bg-accent-600"
-                          )}></div>
+                          <div
+                            className={cn(
+                              "w-2 h-2 rounded-full flex-shrink-0 mt-1",
+                              feature.color === "primary" && "bg-primary-600",
+                              feature.color === "secondary" && "bg-secondary-600",
+                              feature.color === "accent" && "bg-accent-600"
+                            )}
+                          ></div>
                           <span className="text-gray-700 text-sm">{item}</span>
                         </div>
                       ))}
@@ -422,20 +427,21 @@ const ConsultProContent = () => {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
       {/* Integrations Section */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-secondary-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <div className="animate-on-scroll inline-flex items-center space-x-2 bg-primary-100/80 backdrop-blur-sm border border-primary-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
               <Cloud className="h-4 w-4 text-primary-600" />
               <span className="text-xs sm:text-sm font-semibold text-primary-700">Seamless Integrations</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Works with Your <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Existing Tools</span>
             </h2>
@@ -443,8 +449,8 @@ const ConsultProContent = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {integrations.map((integration, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 text-center"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -464,7 +470,7 @@ const ConsultProContent = () => {
       {/* Why Choose ConsultPro */}
       <section className="py-16 sm:py-20 bg-white relative overflow-hidden">
         <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-br from-primary-200/30 to-secondary-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-secondary-200/30 to-accent-200/30 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-secondary-200/30 to-accent-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
@@ -472,57 +478,90 @@ const ConsultProContent = () => {
               <Star className="h-4 w-4 text-secondary-600" />
               <span className="text-xs sm:text-sm font-semibold text-secondary-700">Why Choose ConsultPro</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               The Smart Choice for <span className="bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Modern Consulting</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {whyChooseReasons.map((reason, index) => (
-              <div 
-                key={index} 
-                className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 text-center"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <div className="text-primary-600">
-                    {reason.icon}
+            {whyChooseReasons.map((reason, index, arr) => {
+              const remainder = arr.length % 3;
+              const isSecondLast = index === arr.length - 2;
+              const isLast = index === arr.length - 1;
+
+              // When 2 items remain, render them together in a centered flex row
+              if (remainder === 2 && isSecondLast) {
+                const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
+                return (
+                  <div key="last-two-centered" className="lg:col-span-3 hidden lg:block">
+                    <div className="flex justify-center gap-6">
+                      {lastTwo.map((card, i) => (
+                        <div
+                          key={`last-two-${i}`}
+                          className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 text-center w-full max-w-sm"
+                          style={{ animationDelay: `${(arr.length - 2 + i) * 0.1}s` }}
+                        >
+                          <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <div className="text-primary-600">{card.icon}</div>
+                          </div>
+                          <h3 className="font-semibold text-gray-900 mb-2">{card.title}</h3>
+                          <p className="text-gray-600 text-sm">{card.description}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
+                );
+              }
+
+              // Skip rendering the very last card because it's included in the wrapper above
+              if (remainder === 2 && isLast) return null;
+
+              // Normal cards
+              return (
+                <div
+                  key={index}
+                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 text-center"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <div className="text-primary-600">{reason.icon}</div>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">{reason.title}</h3>
+                  <p className="text-gray-600 text-sm">{reason.description}</p>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{reason.title}</h3>
-                <p className="text-gray-600 text-sm">{reason.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
         </div>
       </section>
 
       {/* Implementation Section */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-primary-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <div className="animate-on-scroll inline-flex items-center space-x-2 bg-accent-100/80 backdrop-blur-sm border border-accent-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
               <Zap className="h-4 w-4 text-accent-600" />
               <span className="text-xs sm:text-sm font-semibold text-accent-700">Fast Implementation</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Deploy in <span className="bg-gradient-to-r from-accent-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Days, Not Weeks</span>
             </h2>
-            
+
             <p className="animate-on-scroll text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
-              ConsultPro is a fully developed, production-ready SaaS platform. Our implementation process is 
+              ConsultPro is a fully developed, production-ready SaaS platform. Our implementation process is
               streamlined to ensure your team is up and running with minimal delay.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {implementationSteps.map((step, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -558,7 +597,7 @@ const ConsultProContent = () => {
               <TrendingUp className="h-4 w-4 text-primary-600" />
               <span className="text-xs sm:text-sm font-semibold text-primary-700">Success Stories</span>
             </div>
-            
+
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
               Real Results from <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Real Clients</span>
             </h2>
@@ -566,8 +605,8 @@ const ConsultProContent = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
             {successStories.map((story, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="animate-on-scroll group relative bg-white rounded-2xl p-6 sm:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -585,17 +624,17 @@ const ConsultProContent = () => {
       {/* Demo CTA Section */}
       <section id="demo" className="py-16 sm:py-20 bg-gradient-to-br from-gray-900 to-primary-900 text-white relative overflow-hidden">
         <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-br from-white/10 to-transparent rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             See <span className="font-serif-display font-normal italic">Pay Pilot</span> in Action
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Experience the platform with a free demo customized for your business needs. 
+            Experience the platform with a free demo customized for your business needs.
             No commitment. Just clear, powerful solutions.
           </p>
-          
+
           {/* Contact Information */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 max-w-2xl mx-auto mb-8">
             <div className="space-y-4 text-left">
@@ -619,7 +658,7 @@ const ConsultProContent = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/contact"
@@ -630,7 +669,7 @@ const ConsultProContent = () => {
                 <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </div>
             </a>
-            
+
             <a
               href="/contact"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
@@ -640,7 +679,7 @@ const ConsultProContent = () => {
                 <Download className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
               </div>
             </a>
-            
+
             <a
               href="/contact"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
