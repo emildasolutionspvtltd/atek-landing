@@ -45,7 +45,7 @@ const OtherServicesContent = () => {
       ],
       idealFor: "Enterprises scaling operations, startups planning tech stacks, organizations modernizing legacy infrastructure.",
       color: "primary",
-      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/premium-photo/people-meeting-tablet-screen-data-analytics-financial-presentation-meeting-advice-strategy-business-woman-manager-team-talking-planning-collaboration-digital-statistics_590464-271474.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'software-development',
@@ -63,7 +63,7 @@ const OtherServicesContent = () => {
       technologies: "React, Angular, Node.js, Python, Java, .NET, SQL/NoSQL, GraphQL, REST",
       valueDelivered: "User-centric design, clean architecture, security-first code, performance optimization.",
       color: "secondary",
-      image: "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/premium-photo/programming-background-with-person-working-with-codes-computer_23-2150010148.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'saas-development',
@@ -85,7 +85,7 @@ const OtherServicesContent = () => {
         ]
       },
       color: "accent",
-      image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/free-photo/people-office-analyzing-checking-finance-graphs_23-2150377138.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'managed-it',
@@ -102,7 +102,7 @@ const OtherServicesContent = () => {
       ],
       industriesSupported: "Healthcare, FinTech, Education, Logistics, Professional Services",
       color: "primary",
-      image: "https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/free-photo/group-young-business-people-working-office_158595-5210.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'devops',
@@ -119,7 +119,7 @@ const OtherServicesContent = () => {
       ],
       bestFitFor: "Product teams, SaaS companies, large enterprises, and cloud-native transformations.",
       color: "secondary",
-      image: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image: "https://img.freepik.com/premium-photo/devops-concept-software-development-it-operations-agile-programming_29488-8105.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
     },
     {
       id: 'cloud-services',
@@ -202,7 +202,7 @@ const OtherServicesContent = () => {
   return (
     <div ref={sectionRef}>
       {/* Hero Section */}
-      <section className="py-24 sm:py-32 bg-[url('/programming.jpg')] bg-cover bg-center bg-no-repeat relative overflow-hidden min-h-screen">
+      <section className="py-24 sm:py-32 bg-[url('/programming-background-collage.jpg')] bg-cover bg-center bg-no-repeat relative overflow-hidden min-h-screen">
         {/* Dark gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-gray-800/80 to-primary-900/85"></div>
         

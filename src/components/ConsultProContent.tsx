@@ -197,7 +197,7 @@ const ConsultProContent = () => {
   return (
     <div ref={sectionRef}>
       {/* Hero Section */}
-      <div className="relative overflow-hidden min-h-screen bg-[url('/MacBook%20Mockup,%20Floating%20(1).png')] bg-cover bg-center bg-no-repeat">
+      <div className="relative overflow-hidden min-h-screen bg-[url('/MacBook-Mockup-Floating.png')] bg-cover bg-center bg-no-repeat">
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-gray-800/60 to-primary-900/70"></div>
         
@@ -303,7 +303,7 @@ const ConsultProContent = () => {
             <div className="animate-on-scroll">
               <div className="bg-gradient-to-br from-primary-50/30 to-secondary-50/30 rounded-2xl sm:rounded-3xl overflow-hidden shadow-large">
                 <img 
-                  src="/Screenshot 2025-08-08 094954 copy.png"
+                  src="/Screenshot-2025-08-08-094954.png"
                   alt="Pay Pilot Admin Dashboard Interface"
                   className="w-full h-80 object-cover"
                 />

@@ -48,7 +48,7 @@ const ConsultPro = () => {
           
           <h2 className="animate-on-scroll text-3xl sm:text-4xl md:text-6xl font-bold text-neutral-900 mb-6 sm:mb-8 leading-tight px-2 sm:px-0">
             <img 
-              src="/PAY PILOT 2nd Variation-05-05.png" 
+              src="https://atek-it-professional.netlify.app/PAY%20PILOT%202nd%20Variation-05-05.png" 
               alt="PayPilot" 
               className="inline-block h-12 sm:h-20 md:h-44 w-auto mx-auto"
             />
@@ -76,7 +76,7 @@ const ConsultPro = () => {
               {/* Left Column - Mobile App Image - Mobile Optimized */}
               <div className="animate-on-scroll bg-gradient-to-br from-primary-50/30 to-secondary-50/30 rounded-2xl sm:rounded-3xl overflow-hidden h-64 sm:h-80">
                 <img 
-                  src="/Macbook Mockup Front View UV (3).png" 
+                  src="https://atek-it-professional.netlify.app/Macbook%20Mockup%20Front%20View%20UV%20(3).png" 
                   alt="Pay Pilot Mobile Application"
                   className="w-full h-full object-cover object-center"
                 />
