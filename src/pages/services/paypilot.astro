@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ConsultProContent from '../../components/ConsultProContent';
+---
+
+<Layout 
+  title="Pay Pilot SaaS - ATEK IT | Streamline Your Consulting Operations"
+  description="Pay Pilot is an all-in-one consultant operations management platform by ATEK IT. Streamline time tracking, invoicing, payroll, and client management for IT consulting firms and professional services."
+  keywords="Pay Pilot, SaaS, consulting operations, time tracking, invoicing, payroll management, IT consulting software, professional services platform"
+>
+  <Header />
+  
+  <main>
+    <ConsultProContent client:load />
+  </main>
+
+  <Footer />
+</Layout>

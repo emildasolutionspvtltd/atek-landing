@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CareersHero from '../components/CareersHero';
+import CareersContent from '../components/CareersContent';
+---
+
+<Layout 
+  title="Careers - ATEK IT | Join Our Growing Team"
+  description="Explore career opportunities at ATEK IT. Join our team of technology professionals and contribute to innovative projects that make a difference. Real challenges, real growth."
+  keywords="ATEK IT careers, software developer jobs, DevOps engineer, cloud engineer, IT consulting careers, technology jobs, Frisco Texas jobs"
+>
+  <Header />
+  
+  <main>
+    <CareersHero client:load />
+    <CareersContent client:load />
+  </main>
+
+  <Footer />
+</Layout>

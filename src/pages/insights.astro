@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import InsightsIntroContent from '../components/InsightsIntroContent';
+import InsightsContent from '../components/InsightsContent';
+---
+
+<Layout 
+  title="Insights - ATEK IT | Technology Blog & Resources"
+  description="Expert insights, resources, and industry trends from ATEK IT. Actionable intelligence for tech-driven enterprises covering SaaS, cloud, DevOps, and IT strategy."
+  keywords="technology blog, IT insights, SaaS development, cloud computing, DevOps, IT consulting, digital transformation, ConsultPro, ATEK IT resources"
+>
+  <Header />
+  
+  <main class="pt-20">
+    <InsightsIntroContent client:load />
+    <InsightsContent client:load />
+  </main>
+
+  <Footer />
+</Layout>

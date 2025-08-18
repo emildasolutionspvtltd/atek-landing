@@ -1,0 +1,52 @@
+---
+import Navigation from './Navigation';
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header">
+  <div class="absolute inset-0 bg-white/80 backdrop-blur-xl border-b border-neutral-200/50"></div>
+  <div class="relative max-w-8xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <div class="flex items-center">
+        <a href="/" class="flex items-center space-x-3 group">
+          <div class="relative">
+            <img 
+              src="/ATEK Logo-01.svg" 
+              alt="ATEK IT Logo" 
+              class="h-16 w-auto group-hover:scale-105 transition-all duration-300"
+            />
+          </div>
+        </a>
+      </div>
+      
+      <Navigation client:load />
+    </div>
+  </div>
+</header>
+
+<script>
+  // Enhanced header scroll effect
+  const header = document.getElementById('header');
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 100) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+    
+    lastScrollY = currentScrollY;
+  });
+</script>
+
+<style>
+  #header.scrolled {
+    @apply shadow-soft;
+  }
+  
+  #header.scrolled .bg-white\/80 {
+    @apply bg-white/95;
+  }
+</style>

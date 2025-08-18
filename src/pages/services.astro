@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import OtherServicesContent from '../components/OtherServicesContent';
+---
+
+<Layout 
+  title="Services - ATEK IT | Comprehensive IT Solutions & Software Development"
+  description="Comprehensive IT services including consulting, custom software development, SaaS platforms, managed IT services, DevOps, cloud solutions, networking, data analytics, and RPA automation."
+  keywords="IT consulting, software development, SaaS development, managed IT services, DevOps automation, cloud services, networking infrastructure, data analytics, RPA, digital transformation"
+>
+  <Header />
+  
+  <main>
+    <OtherServicesContent client:load />
+  </main>
+
+  <Footer />
+</Layout>

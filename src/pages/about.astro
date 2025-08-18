@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AboutHero from '../components/AboutHero.tsx';
+import AboutContent from '../components/AboutContent.tsx';
+---
+
+<Layout 
+  title="About Us - ATEK IT | Leading IT Consulting & Software Solutions"
+  description="Learn about ATEK IT's mission, values, and team. We deliver intelligent technology solutions across cloud, DevOps, networking, and enterprise software development."
+  keywords="about ATEK IT, IT consulting company, software development team, technology solutions, digital transformation experts"
+>
+  <Header />
+  
+  <main>
+    <AboutHero client:load />
+    <AboutContent client:load />
+  </main>
+
+  <Footer />
+</Layout>

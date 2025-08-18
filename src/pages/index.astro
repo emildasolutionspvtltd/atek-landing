@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero';
+import WhyAtekIT from '../components/WhyAtekIT';
+import ConsultPro from '../components/ConsultPro';
+import CompanyStats from '../components/CompanyStats';
+import CoreServices from '../components/CoreServices';
+import SpecializedVerticals from '../components/SpecializedVerticals';
+import CallToAction from '../components/CallToAction';
+---
+
+<Layout 
+  title="ATEK IT - Leading IT Consulting & Software Solutions | Pay Pilot SaaS"
+  description="ATEK IT delivers intelligent IT consulting, custom software development, and our flagship SaaS product Pay Pilot. Based in Frisco, Texas, we specialize in cloud, DevOps, and digital transformation."
+  keywords="IT consulting, software development, SaaS, Pay Pilot, cloud services, DevOps, digital transformation, Frisco Texas"
+>
+  <Header />
+  
+  <main>
+    <Hero client:load />
+    <CoreServices client:load />
+    <ConsultPro client:load />
+    <WhyAtekIT client:load />
+    <CompanyStats client:load />
+    <SpecializedVerticals client:load />
+    <CallToAction client:load />
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PartnersHero from '../components/PartnersHero.tsx';
+import PartnersContent from '../components/PartnersContent.tsx';
+---
+
+<Layout 
+  title="Partners - ATEK IT | Strategic Technology Partnerships"
+  description="Partner with ATEK IT for co-innovation, technical enablement, and joint go-to-market opportunities. We collaborate with cloud providers, SaaS platforms, consulting firms, and tech startups."
+  keywords="technology partnerships, strategic alliances, co-innovation, technical enablement, cloud providers, SaaS platforms, consulting partnerships"
+>
+  <Header />
+  
+  <main>
+    <PartnersHero client:load />
+    <PartnersContent client:load />
+  </main>
+
+  <Footer />
+</Layout>

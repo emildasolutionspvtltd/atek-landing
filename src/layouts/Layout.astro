@@ -1,0 +1,77 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  canonical?: string;
+}
+
+const { title, description = "ATEK IT - Leading IT consulting and software solutions company delivering intelligent services across cloud, DevOps, networking, and enterprise software development.", keywords = "IT consulting, software development, SaaS, ConsultPro, cloud services, DevOps, digital transformation", canonical } = Astro.props;
+
+const currentUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <link rel="canonical" href={canonical || currentUrl} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ATEK IT" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ATEK IT",
+        "url": "https://atekit.com",
+        "logo": "https://atekit.com/logo.png",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "7460 Warren Pkwy, Suite 100-148",
+          "addressLocality": "Frisco",
+          "addressRegion": "TX",
+          "postalCode": "75034",
+          "addressCountry": "US"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+1-469-269-2345",
+          "contactType": "customer service",
+          "email": "info@atekit.com"
+        },
+        "sameAs": [
+          "https://linkedin.com/company/atekit",
+          "https://twitter.com/atekit"
+        ]
+      }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen bg-white font-sans antialiased">
+    <slot />
+  </body>
+</html>
