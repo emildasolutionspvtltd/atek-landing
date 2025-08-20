@@ -1,4 +1,6 @@
 ---
+import StickyContactBar from '../components/StickyContactBar.tsx';
+
 export interface Props {
   title: string;
   description?: string;
@@ -6,7 +8,7 @@ export interface Props {
   canonical?: string;
 }
 
-const { title, description = "ATEK IT - Leading IT consulting and software solutions company delivering intelligent services across cloud, DevOps, networking, and enterprise software development.", keywords = "IT consulting, software development, SaaS, ConsultPro, cloud services, DevOps, digital transformation", canonical } = Astro.props;
+const { title, description = "ATEK IT - Leading IT consulting and software solutions company delivering intelligent services across cloud, DevOps, networking, and enterprise software development.", keywords = "IT consulting, software development, SaaS, PayPilot, cloud services, DevOps, digital transformation", canonical } = Astro.props;
 
 const currentUrl = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -16,7 +18,7 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/atek favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     
     <!-- SEO Meta Tags -->
@@ -73,5 +75,6 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body class="min-h-screen bg-white font-sans antialiased">
     <slot />
+    <StickyContactBar client:load />
   </body>
 </html>

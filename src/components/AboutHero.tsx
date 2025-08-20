@@ -1,29 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import { Users, Target, Heart } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const AboutHero = () => {
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = heroRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(heroRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   return (
-    <div className="relative overflow-hidden min-h-screen bg-[url('https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2')] bg-cover bg-center bg-no-repeat">
+    <div
+      className="relative overflow-hidden min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/about professionals.jpg')" }}
+    >
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-black/50"></div>
       

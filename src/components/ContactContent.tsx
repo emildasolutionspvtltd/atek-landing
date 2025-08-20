@@ -1,26 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, Star, CheckCircle, ArrowRight } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const ContactContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   return (
@@ -367,7 +355,7 @@ const ContactContent = () => {
             </a>
             
             <a
-              href="/services/consultpro"
+              href="mailto:info@atekit.com?subject=Demo Request"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
             >
               <div className="flex items-center justify-center space-x-2">

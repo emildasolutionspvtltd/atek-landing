@@ -7,26 +7,14 @@ import {
   Activity, PieChart, Users, FileText, Monitor, Server,
   Cpu, HardDrive, Wifi, Eye, AlertTriangle, Wrench
 } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const OtherServicesContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   const services = [
@@ -72,8 +60,8 @@ const OtherServicesContent = () => {
       subtitle: "Build SaaS platforms that scale and deliver continuous value.",
       description: "We help businesses bring SaaS products to life—from MVPs to enterprise-grade platforms. Our team specializes in architecting multi-tenant systems, building scalable databases, and implementing integrations that enhance product stickiness.",
       flagshipProduct: {
-        name: "ConsultPro",
-        description: "ConsultPro is ATEK IT's proprietary SaaS platform designed for consulting and professional services firms. It simplifies time tracking, client billing, payroll processing, and real-time reporting with built-in integrations for:",
+        name: "PayPilot",
+        description: "PayPilot is ATEK IT's proprietary SaaS platform designed for consulting and professional services firms. It simplifies time tracking, client billing, payroll processing, and real-time reporting with built-in integrations for:",
         integrations: [
           "Zoho Books",
           "QuickBooks", 
@@ -119,7 +107,7 @@ const OtherServicesContent = () => {
       ],
       bestFitFor: "Product teams, SaaS companies, large enterprises, and cloud-native transformations.",
       color: "secondary",
-      image: "https://img.freepik.com/premium-photo/devops-concept-software-development-it-operations-agile-programming_29488-8105.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80"
+      image: "/DevOps & Automation.jpg"
     },
     {
       id: 'cloud-services',
@@ -202,7 +190,13 @@ const OtherServicesContent = () => {
   return (
     <div ref={sectionRef}>
       {/* Hero Section */}
-      <section className="py-24 sm:py-32 bg-[url('/programming-background-collage.jpg')] bg-cover bg-center bg-no-repeat relative overflow-hidden min-h-screen">
+      <section
+        className="py-24 sm:py-32 bg-cover bg-no-repeat relative overflow-hidden min-h-screen"
+        style={{
+          backgroundImage: "url('/other services bg.jpg')",
+          backgroundPosition: 'center 5%'
+        }}
+      >
         {/* Dark gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/85 via-gray-800/80 to-primary-900/85"></div>
         
@@ -419,7 +413,7 @@ const OtherServicesContent = () => {
                     </div>
                     <div className="mt-4">
                       <a
-                        href="/services/paypilot"
+                        href="mailto:info@atekit.com?subject=Pay Pilot Demo Request"
                         className="inline-flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
                       >
                         <span>Pay Pilot Demo</span>
@@ -493,7 +487,7 @@ const OtherServicesContent = () => {
                   <img 
                     src={service.image} 
                     alt={`${service.title} Service`}
-                    className="w-full h-80 object-cover"
+                    className="w-full h-80 object-cover object-top"
                   />
                 </div>
               </div>

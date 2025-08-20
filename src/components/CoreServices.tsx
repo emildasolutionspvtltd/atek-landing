@@ -1,25 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Star, Target, TrendingUp } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const CoreServices = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   const services = [

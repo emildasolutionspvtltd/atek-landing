@@ -6,26 +6,14 @@ import {
   Brain, Cpu, Network, Shield, Activity, PieChart
 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const InsightsContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   const whyFollowReasons = [
@@ -50,8 +38,8 @@ const InsightsContent = () => {
   ];
 
   const consultProArticles = [
-    "How ConsultPro Cut Payroll Time by 90% for a 100+ Consultant Firm",
-    "Integrating QuickBooks and Zoho with ConsultPro: What You Need to Know",
+    "How PayPilot Cut Payroll Time by 90% for a 100+ Consultant Firm",
+    "Integrating QuickBooks and Zoho with PayPilot: What You Need to Know",
     "Best Practices for Time Tracking in Consulting Operations"
   ];
 
@@ -96,7 +84,6 @@ const InsightsContent = () => {
       icon: <Cloud className="h-5 w-5" />
     },
     {
-      title: "ConsultPro Onboarding Workbook",
       title: "Pay Pilot Onboarding Workbook",
       description: "Step-by-step planning sheet for new customers",
       icon: <Sparkles className="h-5 w-5" />
@@ -106,7 +93,7 @@ const InsightsContent = () => {
   const topicCategories = [
     {
       icon: <Sparkles className="h-8 w-8" />,
-      title: "ConsultPro Use Cases",
+      title: "PayPilot Use Cases",
       description: "Discover how our flagship SaaS product is helping real consulting teams save time, reduce errors, and scale operations.",
       articles: consultProArticles,
       color: "primary"

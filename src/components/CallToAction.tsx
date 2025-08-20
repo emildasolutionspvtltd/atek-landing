@@ -11,7 +11,7 @@ const CallToAction = () => {
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-8 px-2 sm:px-0">
             Whether you're scaling a startup, digitizing an enterprise, or streamlining your consulting 
-            business with ConsultPro, ATEK IT is your trusted partner for digital excellence.
+            business with PayPilot, ATEK IT is your trusted partner for digital excellence.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ const CallToAction = () => {
               </a>
               
               <a
-                href="/services/paypilot"
+                href="mailto:info@atekit.com?subject=Demo Request"
                 className="w-full border-2 border-white/30 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg hover:bg-white/10 transition-colors duration-200 font-semibold flex items-center justify-center space-x-2 text-sm sm:text-base"
               >
                 <span>Schedule a Demo</span>

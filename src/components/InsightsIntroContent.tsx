@@ -1,36 +1,26 @@
 import React, { useEffect, useRef } from 'react';
 import { Lightbulb, BarChart3, TrendingUp, Target, Users, Zap } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const InsightsIntroContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   return (
-      <section ref={sectionRef} className="py-24 sm:py-32 bg-gradient-to-br from-neutral-50 via-white to-primary-50/30 relative overflow-hidden min-h-screen flex items-center">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-secondary-100/40 to-transparent rounded-full blur-3xl"></div>
-      
+      <section ref={sectionRef} className="py-24 sm:py-32 relative overflow-hidden min-h-screen flex items-center">
       {/* Background Image Layer */}
-      <div className="absolute inset-0 bg-[url('/person-working-html-computer.jpg')] bg-cover bg-center bg-no-repeat opacity-30"></div>
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/insight hero.jpg')" }}
+      ></div>
+
+      {/* Vignette overlay for content visibility */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"></div>
 
       <div className="relative max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Header */}
@@ -40,7 +30,7 @@ const InsightsIntroContent = () => {
             <span className="text-xs sm:text-sm font-semibold text-primary-700">Expert Technology Insights</span>
           </div>
           
-          <h1 className="animate-on-scroll text-4xl sm:text-5xl md:text-7xl font-bold text-neutral-900 mb-8 sm:mb-10 leading-tight px-2 sm:px-0">
+          <h1 className="animate-on-scroll text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-8 sm:mb-10 leading-tight px-2 sm:px-0">
             Transform Your Business with 
             <br />
             <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-700 bg-clip-text text-transparent font-serif-display font-normal italic animate-gradient-shift bg-300% bg-size-300">Expert Insights</span>

@@ -8,26 +8,14 @@ import {
 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
 import { cn } from '@/lib/utils';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const ConsultProContent = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   const targetAudience = [
@@ -201,8 +189,8 @@ const ConsultProContent = () => {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 via-gray-800/60 to-primary-900/70"></div>
 
-        <section className="relative z-10 pt-24 pb-16">
-          <div className="relative max-w-8xl mx-auto px-6 lg:px-8">
+        <section className="relative z-10 pt-24 pb-16 lg:pt-32 xl:pt-40 min-h-screen flex items-center">
+          <div className="relative max-w-8xl mx-auto px-6 lg:px-8 w-full">
             <div className="text-center">
               {/* Trust Badge */}
               <div className="animate-on-scroll inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8 shadow-soft">
@@ -248,7 +236,7 @@ const ConsultProContent = () => {
               {/* Enhanced CTA Buttons */}
               <div className="animate-on-scroll flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
                 <a
-                  href="#demo"
+                  href="mailto:info@atekit.com?subject=Demo Request"
                   className="group relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-10 py-5 rounded-2xl font-semibold text-lg shadow-large hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
                 >
                   <div className="flex items-center space-x-3">
@@ -319,7 +307,7 @@ const ConsultProContent = () => {
               <div className="bg-gradient-to-br from-secondary-50/30 to-accent-50/30 rounded-2xl sm:rounded-3xl overflow-hidden shadow-large">
                 <img
                   src="/mobileView.png"
-                  alt="ConsultPro Mobile Application"
+                  alt="PayPilot Mobile Application"
                   className="w-full h-80 object-cover"
                 />
                 <div className="p-6">
@@ -350,7 +338,7 @@ const ConsultProContent = () => {
             <div className="animate-on-scroll max-w-4xl mx-auto space-y-6">
               <p className="text-lg md:text-xl text-neutral-600 leading-relaxed">
                 Running a professional services business shouldn't mean juggling spreadsheets, chasing
-                timesheets, or manually tracking payments. With ConsultPro, you get an intelligent system
+                timesheets, or manually tracking payments. With PayPilot, you get an intelligent system
                 designed to automate and simplify every step—from logging hours to generating payroll.
               </p>
             </div>
@@ -476,7 +464,7 @@ const ConsultProContent = () => {
           <div className="text-center mb-12 sm:mb-16">
             <div className="animate-on-scroll inline-flex items-center space-x-2 bg-secondary-100/80 backdrop-blur-sm border border-secondary-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
               <Star className="h-4 w-4 text-secondary-600" />
-              <span className="text-xs sm:text-sm font-semibold text-secondary-700">Why Choose ConsultPro</span>
+              <span className="text-xs sm:text-sm font-semibold text-secondary-700">Why Choose PayPilot</span>
             </div>
 
             <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
@@ -553,7 +541,7 @@ const ConsultProContent = () => {
             </h2>
 
             <p className="animate-on-scroll text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
-              ConsultPro is a fully developed, production-ready SaaS platform. Our implementation process is
+              PayPilot is a fully developed, production-ready SaaS platform. Our implementation process is
               streamlined to ensure your team is up and running with minimal delay.
             </p>
           </div>
@@ -661,7 +649,7 @@ const ConsultProContent = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/contact"
+              href="mailto:info@atekit.com?subject=Demo Request"
               className="group bg-white text-primary-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold text-base sm:text-lg shadow-medium hover:shadow-large transform hover:-translate-y-1"
             >
               <div className="flex items-center justify-center space-x-2">

@@ -11,9 +11,10 @@ const Navigation = () => {
     { 
       name: 'Services', 
       href: '/services',
+    
       dropdown: [
+        { name: 'Main Services', href: '/services' },
         { name: 'Pay Pilot SaaS', href: '/services/paypilot' },
-        { name: 'Other Services', href: '/services' },
       ]
     },
     { name: 'Insights', href: '/insights' },
