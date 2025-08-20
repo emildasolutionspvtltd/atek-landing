@@ -1,26 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { CheckCircle, Users, Zap, Settings, BarChart, Shield, Star, Target, TrendingUp, Cloud, Code, Lightbulb, Network, Heart, Wrench, Briefcase, MapPin, Phone, Mail } from 'lucide-react';
 import { Handshake } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const PartnersContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
 

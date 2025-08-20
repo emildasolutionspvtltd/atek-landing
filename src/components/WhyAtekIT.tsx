@@ -32,7 +32,7 @@ const WhyAtekIT = () => {
     {
       icon: <Settings className="h-6 w-6 sm:h-8 sm:w-8" />,
       title: "SaaS Products with Real-World Impact",
-      description: "Our proprietary platform ConsultPro is built to solve real consulting operations pain points—time tracking, payroll, billing, and reporting—under one intelligent roof.",
+      description: "Our proprietary platform PayPilot is built to solve real consulting operations pain points—time tracking, payroll, billing, and reporting—under one intelligent roof.",
       color: "secondary"
     },
     {

@@ -65,7 +65,7 @@ const ConsultPro = () => {
           <div className="animate-on-scroll mb-8 sm:mb-12 hidden md:block">
             <img 
               src="https://atek-it-professional.netlify.app/Screenshot%202025-08-08%20094954.png" 
-              alt="ConsultPro Dashboard Interface"
+              alt="PayPilot Dashboard Interface"
               className="rounded-2xl sm:rounded-3xl shadow-large w-full h-auto max-w-4xl mx-auto"
             />
           </div>

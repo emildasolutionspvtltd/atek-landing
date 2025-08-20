@@ -23,7 +23,7 @@ const CareersHero = () => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden min-h-screen bg-[url('/asia-businessmen-businesswomen-meeting-brainstorming-ideas-conducting-business-presentation-project-colleagues-working-together-plan-success-strategy-enjoy-teamwork-small-modern-night-office.jpg')] bg-cover bg-center bg-no-repeat">
+    <div className="relative overflow-hidden min-h-screen bg-[url('/asia-women.jpg')] bg-cover bg-center bg-no-repeat">
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-black/50"></div>
       

@@ -1,37 +1,72 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, PlayCircle, Sparkles } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
 
+  // Slider state
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Configurable image positioning - adjust these percentages as needed
+  const imagePositionX = '50%'; // Horizontal position (0% = left, 50% = center, 100% = right)
+  const imagePositionY = '30%'; // Vertical position (0% = top, 50% = center, 100% = bottom)
+
+  const slides = [
+    { image: '/slide1.jpg', alt: 'Slide 1' },
+    { image: '/slide2.jpg', alt: 'Slide 2' },
+    { image: '/slide3.jpg', alt: 'Slide 3' }
+  ];
+
+  // Auto-slide functionality
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000); // Change slide every 5 seconds
 
-    const elements = heroRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
-    return () => observer.disconnect();
+  // Initialize smooth animations
+  useEffect(() => {
+    const observer = initSmoothAnimations(heroRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
+
+
   return (
-    <div className="relative overflow-hidden min-h-screen bg-[url('/try-check-this-intelligent-handsome-brunette-man-sitting-with-his-colleagues-front-computer-pointing-it-while-working-together.jpg')] bg-cover bg-center bg-no-repeat">
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/40"></div>
-      
-      <section ref={heroRef} className="relative z-10 pt-24 pb-16">
-        <div className="relative max-w-8xl mx-auto px-6 lg:px-8">
+    <div className="relative overflow-hidden min-h-screen">
+      {/* Background Image Slider */}
+      <div className="absolute inset-0">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.alt}
+              className="w-full h-full object-cover"
+              style={{ objectPosition: `${imagePositionX} ${imagePositionY}` }}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Vignette overlay for content visibility */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"></div>
+
+
+
+      <section ref={heroRef} className="relative z-10 min-h-screen flex items-center pt-20">
+        <div className="relative max-w-8xl mx-auto px-6 lg:px-8 w-full">
           <div className="text-center">
-            {/* Trust Badge */}
-            <div className="animate-on-scroll inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8 shadow-soft">
+            {/* Trust Badge - Moved down to prevent header overlap */}
+            <div className="animate-on-scroll inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8 shadow-soft mt-8">
               <Sparkles className="h-4 w-4 text-primary-600" />
               <span className="text-sm font-semibold text-primary-700">Trusted by 63+ Enterprise Clients</span>
               <div className="flex -space-x-1">
@@ -94,9 +129,9 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-gentle">
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+        {/* Scroll Indicator - Moved to bottom where pagination used to be */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce-gentle z-20">
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center backdrop-blur-sm bg-white/10">
             <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>

@@ -5,9 +5,10 @@ import {
   MapPin, Phone, Mail, ArrowRight, Star, CheckCircle,
   X, Upload, AlertCircle, Loader2
 } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const CareersContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -21,21 +22,8 @@ const CareersContent = () => {
   const [errors, setErrors] = React.useState<Record<string, string>>({});
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   // Handle modal open
@@ -238,9 +226,8 @@ const CareersContent = () => {
   return (
     <div ref={sectionRef}>
       {/* Why Join ATEK IT */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-neutral-50 via-white to-primary-50/30 relative overflow-hidden">
+      <section className="py-16 sm:py-24 bg-white relative overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-secondary-100/40 to-transparent rounded-full blur-3xl"></div>
 

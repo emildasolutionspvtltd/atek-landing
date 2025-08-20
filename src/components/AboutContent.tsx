@@ -1,38 +1,26 @@
 import React, { useEffect, useRef } from 'react';
-import { 
-  Target, Heart, Zap, Users, Globe, Award, 
+import {
+  Target, Heart, Zap, Users, Globe, Award,
   CheckCircle, Star, TrendingUp, Lightbulb,
   MapPin, Phone, Mail, ArrowRight, Settings,
   Code, Cloud, Network, BarChart3, Sparkles,
   Shield
 } from 'lucide-react';
+import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const AboutContent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll');
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    const observer = initSmoothAnimations(sectionRef.current);
+    return () => cleanupAnimations(observer);
   }, []);
 
   const capabilities = [
     {
       imageSrc: "https://img.freepik.com/free-photo/modern-business-people-working-office_23-2147704577.jpg?ga=GA1.1.210687937.1755497834&semt=ais_hybrid&w=740&q=80",
-      title: "ConsultPro – Consultant Operations Management SaaS",
-      description: "Our proprietary SaaS product built for IT consulting and staffing firms, ConsultPro streamlines time tracking, invoicing, payroll, and client management. With role-based access, real-time reporting, smart reminders, and seamless integration with QuickBooks, Zoho, and banking systems, it automates core business operations from end to end.",
+      title: "PayPilot – Consultant Operations Management SaaS",
+      description: "Our proprietary SaaS product built for IT consulting and staffing firms, PayPilot streamlines time tracking, invoicing, payroll, and client management. With role-based access, real-time reporting, smart reminders, and seamless integration with QuickBooks, Zoho, and banking systems, it automates core business operations from end to end.",
       color: "primary",
       icon: <Sparkles className="h-6 w-6" />
     },
@@ -129,7 +117,7 @@ const AboutContent = () => {
   return (
     <div ref={sectionRef}>
       {/* Our Story */}
-      <section id="our-story" className="py-16 sm:py-24 bg-gradient-to-br from-neutral-50 via-white to-primary-50/30 relative overflow-hidden">
+      <section id="our-story" className="py-12 sm:py-16 bg-gradient-to-br from-neutral-50 via-white to-primary-50/30 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl"></div>
@@ -188,7 +176,7 @@ const AboutContent = () => {
       </section>
 
       {/* Our Capabilities at a Glance */}
-      <section className="py-16 sm:py-20 bg-white relative overflow-hidden">
+      <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-secondary-100/50 to-transparent rounded-full blur-3xl"></div>
 
@@ -223,7 +211,7 @@ const AboutContent = () => {
                         <img
                           src={capability.imageSrc}
                           alt={capability.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-top"
                         />
                       </div>
                       {/* Text Content Container */}
@@ -258,7 +246,7 @@ const AboutContent = () => {
                         <img
                           src={capability.imageSrc}
                           alt={capability.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-top"
                         />
                       </div>
                     </>
