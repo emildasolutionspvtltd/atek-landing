@@ -236,7 +236,7 @@ const ConsultProContent = () => {
               {/* Enhanced CTA Buttons */}
               <div className="animate-on-scroll flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
                 <a
-                  href="#demo"
+                  href="mailto:info@atekit.com?subject=Demo Request"
                   className="group relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-10 py-5 rounded-2xl font-semibold text-lg shadow-large hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
                 >
                   <div className="flex items-center space-x-3">
@@ -649,7 +649,7 @@ const ConsultProContent = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/contact"
+              href="mailto:info@atekit.com?subject=Demo Request"
               className="group bg-white text-primary-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold text-base sm:text-lg shadow-medium hover:shadow-large transform hover:-translate-y-1"
             >
               <div className="flex items-center justify-center space-x-2">

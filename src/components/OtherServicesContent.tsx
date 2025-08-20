@@ -413,7 +413,7 @@ const OtherServicesContent = () => {
                     </div>
                     <div className="mt-4">
                       <a
-                        href="/services/paypilot"
+                        href="mailto:info@atekit.com?subject=Pay Pilot Demo Request"
                         className="inline-flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
                       >
                         <span>Pay Pilot Demo</span>

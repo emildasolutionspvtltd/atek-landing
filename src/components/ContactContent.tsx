@@ -355,7 +355,7 @@ const ContactContent = () => {
             </a>
             
             <a
-              href="/services/consultpro"
+              href="mailto:info@atekit.com?subject=Demo Request"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
             >
               <div className="flex items-center justify-center space-x-2">
