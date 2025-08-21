@@ -282,16 +282,6 @@ const InsightsContent = () => {
               </div>
             ))}
           </div>
-
-          <div className="animate-on-scroll text-center mt-12">
-            <a
-              href="#"
-              className="inline-flex items-center space-x-2 bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
-            >
-              <span>Browse All Downloads</span>
-              <ArrowRight className="h-5 w-5" />
-            </a>
-          </div>
         </div>
       </section>
 

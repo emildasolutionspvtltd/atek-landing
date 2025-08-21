@@ -8,6 +8,9 @@ const Hero = () => {
   // Slider state
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Logo animation state
+  const [logoAnimating, setLogoAnimating] = useState(false);
+
   // Configurable image positioning - adjust these percentages as needed
   const imagePositionX = '50%'; // Horizontal position (0% = left, 50% = center, 100% = right)
   const imagePositionY = '30%'; // Vertical position (0% = top, 50% = center, 100% = bottom)
@@ -26,6 +29,16 @@ const Hero = () => {
 
     return () => clearInterval(interval);
   }, [slides.length]);
+
+  // Logo animation trigger - animate when slide changes
+  useEffect(() => {
+    setLogoAnimating(true);
+    const timer = setTimeout(() => {
+      setLogoAnimating(false);
+    }, 800); // Animation duration
+
+    return () => clearTimeout(timer);
+  }, [currentSlide]);
 
   // Initialize smooth animations
   useEffect(() => {
@@ -60,13 +73,28 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"></div>
 
+      {/* Animated Logo - Top Right Corner */}
+      <div className="absolute top-[7.5%] md:top-[10%] right-6 z-30">
+        <img
+          src="/grow-logo.svg"
+          alt="Grow Logo"
+          className={`h-10 md:h-14 lg:h-16 w-auto transition-all duration-800 ease-out ${
+            logoAnimating
+              ? 'transform scale-0 opacity-0'
+              : 'transform scale-100 opacity-100'
+          }`}
+          style={{
+            filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+          }}
+        />
+      </div>
 
 
-      <section ref={heroRef} className="relative z-10 min-h-screen flex items-center pt-20">
+      <section ref={heroRef} className="relative z-10 min-h-screen flex items-center pt-28 md:pt-20">
         <div className="relative max-w-8xl mx-auto px-6 lg:px-8 w-full">
           <div className="text-center">
             {/* Trust Badge - Moved down to prevent header overlap */}
-            <div className="animate-on-scroll inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8 shadow-soft mt-8">
+            <div className="animate-on-scroll inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8 shadow-soft mt-12 md:mt-8">
               <Sparkles className="h-4 w-4 text-primary-600" />
               <span className="text-sm font-semibold text-primary-700">Trusted by 63+ Enterprise Clients</span>
               <div className="flex -space-x-1">
