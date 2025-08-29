@@ -7,7 +7,7 @@ const StickyContactBar = () => {
   const contactItems = [
     {
       id: 'phone',
-      icon: <Phone className="h-5 w-5" />,
+      icon: <Phone className="h-3 w-3 md:h-5 md:w-5" />,
       label: '+1 (469)-269-2345',
       action: () => window.open('tel:+14692692345', '_self'),
       bgColor: 'bg-red-500',
@@ -17,7 +17,7 @@ const StickyContactBar = () => {
     },
     {
       id: 'mail',
-      icon: <Mail className="h-5 w-5" />,
+      icon: <Mail className="h-3 w-3 md:h-5 md:w-5" />,
       label: 'Contact Us',
       action: () => window.location.href = '/contact',
       bgColor: 'bg-orange-500',
@@ -27,7 +27,7 @@ const StickyContactBar = () => {
     },
     {
       id: 'apply',
-      icon: <UserPlus className="h-5 w-5" />,
+      icon: <UserPlus className="h-3 w-3 md:h-5 md:w-5" />,
       label: 'Apply Now',
       action: () => window.location.href = '/careers',
       bgColor: 'bg-blue-500',

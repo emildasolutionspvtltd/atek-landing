@@ -1,0 +1,51 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "careers"
+    label: "Careers"
+    folder: "src/content/careers"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Department", name: "department", widget: "string" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Type", name: "type", widget: "select", options: ["Full-time", "Part-time", "Contract", "Internship"] }
+      - { label: "Experience Level", name: "experience", widget: "select", options: ["Entry Level", "Mid Level", "Senior Level", "Lead/Principal"] }
+      - { label: "Salary Range", name: "salary", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - { label: "Requirements", name: "requirements", widget: "list", field: { label: "Requirement", name: "requirement", widget: "string" } }
+      - { label: "Responsibilities", name: "responsibilities", widget: "list", field: { label: "Responsibility", name: "responsibility", widget: "string" } }
+      - { label: "Benefits", name: "benefits", widget: "list", field: { label: "Benefit", name: "benefit", widget: "string" } }
+      - { label: "Skills", name: "skills", widget: "list", field: { label: "Skill", name: "skill", widget: "string" } }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+
+  - name: "career-settings"
+    label: "Career Page Settings"
+    files:
+      - label: "Career Page Content"
+        name: "career-page"
+        file: "src/content/career-page.md"
+        fields:
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Why Join Section Title", name: "why_join_title", widget: "string" }
+          - { label: "Why Join Description", name: "why_join_description", widget: "text" }
+          - label: "Benefits"
+            name: "benefits"
+            widget: "list"
+            fields:
+              - { label: "Icon", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - { label: "Application Process Title", name: "application_title", widget: "string" }
+          - { label: "Application Instructions", name: "application_instructions", widget: "markdown" }
+          - { label: "Contact Email", name: "contact_email", widget: "string" }
+          - { label: "Office Location", name: "office_location", widget: "string" }
