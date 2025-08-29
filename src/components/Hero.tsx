@@ -49,7 +49,7 @@ const Hero = () => {
 
 
   return (
-    <div className="relative overflow-hidden min-h-screen">
+    <div className="relative overflow-hidden h-[auto] md:min-h-screen">
       {/* Background Image Slider */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
@@ -73,12 +73,12 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"></div>
 
-      {/* Animated Logo - Top Right Corner */}
-      <div className="absolute top-[7.5%] md:top-[10%] right-6 z-30">
+      {/* Animated Logo - Top Right Corner - Moved lower */}
+      <div className="absolute top-[10%] md:top-[10%] right-6 z-30">
         <img
           src="/grow-logo.svg"
           alt="Grow Logo"
-          className={`h-10 md:h-14 lg:h-16 w-auto transition-all duration-800 ease-out ${
+          className={`h-8 md:h-12 lg:h-14 w-auto transition-all duration-800 ease-out ${
             logoAnimating
               ? 'transform scale-0 opacity-0'
               : 'transform scale-100 opacity-100'
@@ -90,51 +90,42 @@ const Hero = () => {
       </div>
 
 
-      <section ref={heroRef} className="relative z-10 min-h-screen flex items-center pt-28 md:pt-20">
-        <div className="relative max-w-8xl mx-auto px-6 lg:px-8 w-full">
+      <section ref={heroRef} className="relative z-10 h-auto md:min-h-screen flex flex-col justify-center pt-24 pb-10 md:pt-0 md:pb-0">
+        <div className="relative max-w-8xl mx-auto px-6 lg:px-8 w-full mt-5 md:mt-0">
           <div className="text-center">
-            {/* Trust Badge - Moved down to prevent header overlap */}
-            <div className="animate-on-scroll inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-full px-6 py-3 mb-8 shadow-soft mt-12 md:mt-8">
-              <Sparkles className="h-4 w-4 text-primary-600" />
-              <span className="text-sm font-semibold text-primary-700">Trusted by 63+ Enterprise Clients</span>
-              <div className="flex -space-x-1">
-                <div className="w-6 h-6 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full border-2 border-white"></div>
-                <div className="w-6 h-6 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-full border-2 border-white"></div>
-                <div className="w-6 h-6 bg-gradient-to-br from-accent-400 to-accent-600 rounded-full border-2 border-white"></div>
-              </div>
-            </div>
 
-            {/* Main Headline - Updated to use text-7xl for largest size */}
-            <h1 className="animate-on-scroll text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-10 leading-tight">
+
+            {/* Main Headline - Updated to use text-6xl for largest size */}
+            <h1 className="animate-on-scroll text-2xl md:text-5xl lg:text-6xl font-bold text-white mb-6 md:mb-10 leading-tight">
               Empowering Digital
               <br />
               <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent animate-gradient-shift bg-300% bg-size-300 font-serif-display font-normal italic">
                 Transformation
               </span>
               <br />
-              <span className="text-gray-200 text-3xl md:text-4xl lg:text-5xl font-medium">
+              <span className="text-gray-200 text-xl md:text-3xl lg:text-4xl font-medium">
                 with Technology, Talent & Innovation
               </span>
             </h1>
             
             {/* Concise Description - Better Spacing */}
-            <div className="animate-on-scroll max-w-5xl mx-auto mb-14 space-y-8">
-              <p className="text-xl md:text-2xl text-gray-200 leading-relaxed font-light">
-                ATEK IT delivers intelligent technology solutions across cloud, DevOps, networking, 
+            <div className="animate-on-scroll max-w-5xl mx-auto mb-4 md:mb-8 space-y-4 md:space-y-6">
+              <p className="text-base md:text-xl text-gray-200 leading-relaxed font-light">
+                ATEK IT delivers intelligent technology solutions across cloud, DevOps, networking,
                 and enterprise software development.
               </p>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/30 shadow-soft">
-                <p className="text-lg md:text-xl text-neutral-800 leading-relaxed">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-3 md:p-4 border border-white/30 shadow-soft">
+                <p className="text-base md:text-xl text-neutral-800 leading-relaxed">
                   Our flagship SaaS product, <strong className="text-primary-700 font-semibold">Pay Pilot</strong>: one SaaS platform that automates time tracking, invoicing, payroll, and client management for IT staffing—complete with live reports, smart reminders, and QuickBooks/Zoho sync.
                 </p>
               </div>
             </div>
 
             {/* Enhanced CTA Buttons */}
-            <div className="animate-on-scroll flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
+            <div className="animate-on-scroll flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
               <a
                 href="/services/paypilot"
-                className="group relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-10 py-5 rounded-2xl font-semibold text-lg shadow-large hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+                className="group relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-6 py-3 md:px-10 md:py-5 rounded-2xl font-semibold text-base md:text-lg shadow-large hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
               >
                 <div className="flex items-center space-x-3">
                   <Sparkles className="h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
@@ -146,7 +137,7 @@ const Hero = () => {
               
               <a
                 href="/contact"
-                className="group bg-white/80 backdrop-blur-sm border-2 border-primary-300 text-primary-700 px-10 py-5 rounded-2xl font-semibold text-lg shadow-medium hover:shadow-large hover:bg-white transition-all duration-300 transform hover:-translate-y-1"
+                className="group bg-white/80 backdrop-blur-sm border-2 border-primary-300 text-primary-700 px-6 py-3 md:px-10 md:py-5 rounded-2xl font-semibold text-base md:text-lg shadow-medium hover:shadow-large hover:bg-white transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="flex items-center space-x-3">
                   <PlayCircle className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
@@ -157,8 +148,8 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Scroll Indicator - Moved to bottom where pagination used to be */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce-gentle z-20">
+        {/* Scroll Indicator - Hidden on mobile, visible on desktop */}
+        <div className="hidden md:block absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce-gentle z-20">
           <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center backdrop-blur-sm bg-white/10">
             <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
           </div>
