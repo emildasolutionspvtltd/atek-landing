@@ -1,13 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATEK IT CMS | Admin</title>
+    <link rel="icon" type="image/svg+xml" href="/atek favicon.svg" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <style>
+        /* Custom styling for admin interface */
+        aside a span {
+            display: inline-flex !important;
+            justify-content: center;
+            align-items: center
+        }
+
+        aside a span svg {
+            display: none !important;
+        }
+
+        aside a span::before {
+            font-family: "Font Awesome 5 Free";
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        aside a[href^="#/collections/"] span::before {
+            content: "\f15b";
+        }
+
+        aside a[href="#/collections/careers"] span::before {
+            content: "\f0f2";
+        }
+
+        aside a[href="#/collections/career-settings"] span::before {
+            content: "\f53f";
+        }
+
+        /* Hide view controls */
+        div[class*="ViewControlsSection"] {
+            display: none;
+        }
+
+        /* Custom branding */
+        .css-1aqadf8 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Include the script that builds the page and powers Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://unpkg.com/netlify-cms@^2.10.79/dist/netlify-cms.js"></script>
+<script>
+    // Initialize Netlify Identity with debugging
+    if (window.netlifyIdentity) {
+        console.log('Netlify Identity widget loaded');
+
+        window.netlifyIdentity.on("init", user => {
+            console.log('Netlify Identity initialized', user);
+            if (!user) {
+                console.log('No user found, setting up login handler');
+                window.netlifyIdentity.on("login", () => {
+                    console.log('User logged in, redirecting to admin');
+                    document.location.href = "/admin/";
+                });
+            } else {
+                console.log('User already logged in:', user);
+            }
+        });
+
+        window.netlifyIdentity.on("logout", () => {
+            console.log('User logged out');
+            document.location.href = "/";
+        });
+
+        window.netlifyIdentity.on("error", err => {
+            console.error('Netlify Identity error:', err);
+        });
+    } else {
+        console.error('Netlify Identity widget not loaded');
+    }
+
+    // Custom preview styles
+    CMS.registerPreviewStyle("/admin/preview.css");
+
+    // Custom editor components
+    CMS.registerEditorComponent({
+        id: "youtube",
+        label: "YouTube",
+        fields: [{name: 'id', label: 'YouTube Video ID', widget: 'string'}],
+        pattern: /^{{< youtube (\S+) >}}$/,
+        fromBlock: function(match) {
+            return {
+                id: match[1]
+            };
+        },
+        toBlock: function(obj) {
+            return '{{< youtube ' + obj.id + ' >}}';
+        },
+        toPreview: function(obj) {
+            return (
+                '<img src="http://img.youtube.com/vi/' + obj.id + '/maxresdefault.jpg" alt="Youtube Video"/>'
+            );
+        }
+    });
+</script>
 </body>
 </html>
