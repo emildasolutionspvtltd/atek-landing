@@ -80,16 +80,49 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site);
     <slot />
     <StickyContactBar client:load />
 
-    <!-- Netlify Identity Widget -->
+    <!-- Netlify Identity Widget with Token Forwarding -->
     <script is:inline>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
+      // Token forwarding for email confirmations, invites, and recovery
+      function handleAuthTokens() {
+        const hash = window.location.hash;
+        console.log('Checking for auth tokens in hash:', hash);
+
+        // Check for confirmation, invite, or recovery tokens
+        if (hash && (
+          hash.includes('confirmation_token=') ||
+          hash.includes('invite_token=') ||
+          hash.includes('recovery_token=') ||
+          hash.includes('access_token=')
+        )) {
+          console.log('Auth token detected, redirecting to admin panel');
+          // Redirect to admin panel with the token
+          window.location.href = '/admin/' + hash;
+          return true;
+        }
+        return false;
+      }
+
+      // Run token check immediately
+      if (!handleAuthTokens()) {
+        // Only initialize normal flow if no tokens were found
+        if (window.netlifyIdentity) {
+          console.log('Netlify Identity widget loaded on main site');
+          window.netlifyIdentity.on("init", user => {
+            console.log('Identity initialized on main site:', user);
+            if (!user) {
+              window.netlifyIdentity.on("login", () => {
+                console.log('User logged in on main site, redirecting to admin');
+                document.location.href = "/admin/";
+              });
+            }
+          });
+
+          window.netlifyIdentity.on("logout", () => {
+            console.log('User logged out on main site');
+          });
+        } else {
+          console.log('Netlify Identity widget not available on main site');
+        }
       }
     </script>
   </body>
