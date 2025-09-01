@@ -240,7 +240,7 @@ const CareersContent = () => {
   return (
     <div ref={sectionRef}>
       {/* Why Join ATEK IT */}
-      <section className="py-16 sm:py-24 bg-white relative overflow-hidden">
+      <section className="py-12 sm:py-2 bg-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-secondary-100/40 to-transparent rounded-full blur-3xl"></div>
@@ -291,7 +291,7 @@ const CareersContent = () => {
       </section>
 
       {/* Currently Hiring */}
-      <section id="openings" className="py-16 sm:py-20 bg-white relative overflow-hidden">
+      <section id="openings" className="py-8 sm:py-12 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary-100/50 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-secondary-100/50 to-transparent rounded-full blur-3xl"></div>
 
