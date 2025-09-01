@@ -1,14 +1,10 @@
 ---
 title: "QA Analyst"
-department: "Engineering"
+department: "Quality & Data"
 location: "Remote"
 type: "Full-time"
 experience: "Mid Level"
-salary: "$60,000 - $80,000"
-description: |
-  Join our Engineering team as a QA Analyst and ensure product quality, performance, and reliability through structured testing methodologies. You'll work closely with development teams to identify issues and ensure our software meets the highest quality standards.
-
-  This role offers the opportunity to work on diverse testing projects and contribute to our quality-first culture.
+description: "Ensure product quality through structured testing methodologies. Design test cases, execute manual and automated tests, and collaborate with development teams."
 requirements:
   - "3+ years of quality assurance and testing experience"
   - "Strong knowledge of manual and automated testing methodologies"

@@ -1,14 +1,10 @@
 ---
 title: "DevOps Engineer"
-department: "Infrastructure"
+department: "Engineering & Infrastructure"
 location: "Frisco, TX / Remote"
 type: "Full-time"
 experience: "Mid Level"
-salary: "$75,000 - $110,000"
-description: |
-  Join our Infrastructure team as a DevOps Engineer and help us build and maintain the systems that power our applications and client solutions. You'll work with cutting-edge cloud technologies and automation tools to ensure our platforms are scalable, reliable, and secure.
-
-  This role offers excellent growth opportunities and the chance to work with a variety of technologies across multiple cloud platforms.
+description: "Build and maintain scalable cloud infrastructure. Work with AWS, Docker, Kubernetes, and automation tools to ensure reliable, secure platforms."
 requirements:
   - "3+ years of experience in DevOps or Site Reliability Engineering"
   - "Strong experience with AWS, Azure, or Google Cloud Platform"

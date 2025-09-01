@@ -31,26 +31,48 @@ publish_mode: editorial_workflow
 local_backend: true
 
 collections:
-  - name: "careers"
-    label: "Careers"
+  - name: "careers-regular"
+    label: "Regular Job Roles"
     folder: "src/content/careers"
     create: true
     slug: "{{slug}}"
+    filter: { field: "experience", value: "Senior Level", negate: true }
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Department", name: "department", widget: "string" }
-      - { label: "Location", name: "location", widget: "string" }
-      - { label: "Type", name: "type", widget: "select", options: ["Full-time", "Part-time", "Contract", "Internship"] }
-      - { label: "Experience Level", name: "experience", widget: "select", options: ["Entry Level", "Mid Level", "Senior Level", "Lead/Principal"] }
-      - { label: "Salary Range", name: "salary", widget: "string", required: false }
-      - { label: "Description", name: "description", widget: "markdown" }
-      - { label: "Requirements", name: "requirements", widget: "list", field: { label: "Requirement", name: "requirement", widget: "string" } }
-      - { label: "Responsibilities", name: "responsibilities", widget: "list", field: { label: "Responsibility", name: "responsibility", widget: "string" } }
-      - { label: "Benefits", name: "benefits", widget: "list", field: { label: "Benefit", name: "benefit", widget: "string" } }
-      - { label: "Skills", name: "skills", widget: "list", field: { label: "Skill", name: "skill", widget: "string" } }
+      - { label: "Job Role", name: "title", widget: "string", hint: "The job title/position name" }
+      - { label: "Job Description", name: "description", widget: "text", hint: "Keep this to 2 lines maximum - a brief summary of the role" }
+      - { label: "Job Level", name: "experience", widget: "select", options: ["Entry Level", "Mid Level"], hint: "Experience level required" }
+      - { label: "Job Location", name: "location", widget: "string", default: "Frisco, Texas", hint: "Work location" }
+      - { label: "Job Type/Department", name: "department", widget: "select", options: ["Software & Development", "Engineering & Infrastructure", "Experience & Design", "Quality & Data"], hint: "Which category this job belongs to" }
+      - { label: "Employment Type", name: "type", widget: "select", options: ["Full-time", "Part-time", "Contract", "Internship"], default: "Full-time" }
+      - { label: "Requirements", name: "requirements", widget: "list", field: { label: "Requirement", name: "requirement", widget: "string" }, default: ["Bachelor's degree or equivalent experience"], collapsed: false }
+      - { label: "Responsibilities", name: "responsibilities", widget: "list", field: { label: "Responsibility", name: "responsibility", widget: "string" }, default: ["Collaborate with team members"], collapsed: false }
+      - { label: "Benefits", name: "benefits", widget: "list", field: { label: "Benefit", name: "benefit", widget: "string" }, required: false, collapsed: true }
+      - { label: "Skills", name: "skills", widget: "list", field: { label: "Skill", name: "skill", widget: "string" }, required: false, collapsed: true }
       - { label: "Published", name: "published", widget: "boolean", default: true }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Publish Date", name: "date", widget: "datetime", default: "" }
+
+  - name: "careers-senior"
+    label: "Senior Level Roles"
+    folder: "src/content/careers"
+    create: true
+    slug: "{{slug}}"
+    filter: { field: "experience", value: "Senior Level" }
+    fields:
+      - { label: "Job Role", name: "title", widget: "string", hint: "The senior position title" }
+      - { label: "Department", name: "department", widget: "string", hint: "Department or team name" }
+      - { label: "Location", name: "location", widget: "string", default: "Frisco, Texas" }
+      - { label: "Experience Level", name: "experience", widget: "select", options: ["Senior Level", "Lead/Principal"], default: "Senior Level" }
+      - { label: "Salary Range", name: "salary", widget: "string", hint: "e.g., $120,000 - $150,000/year", required: false }
+      - { label: "Job Description", name: "description", widget: "markdown", hint: "Detailed description of the senior role" }
+      - { label: "Responsibilities", name: "responsibilities", widget: "list", field: { label: "Responsibility", name: "responsibility", widget: "string" }, hint: "Key responsibilities for this senior role" }
+      - { label: "Requirements", name: "requirements", widget: "list", field: { label: "Requirement", name: "requirement", widget: "string" }, hint: "Required qualifications and experience" }
+      - { label: "Employment Type", name: "type", widget: "select", options: ["Full-time", "Part-time", "Contract"], default: "Full-time" }
+      - { label: "Benefits", name: "benefits", widget: "list", field: { label: "Benefit", name: "benefit", widget: "string" }, required: false, collapsed: true }
+      - { label: "Skills", name: "skills", widget: "list", field: { label: "Skill", name: "skill", widget: "string" }, required: false, collapsed: true }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Publish Date", name: "date", widget: "datetime", default: "" }
 
   - name: "career-settings"
     label: "Career Page Settings"

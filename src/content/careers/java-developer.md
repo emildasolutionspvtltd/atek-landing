@@ -1,14 +1,10 @@
 ---
 title: "Java Developer"
-department: "Engineering"
+department: "Software & Development"
 location: "Frisco, Texas"
 type: "Full-time"
 experience: "Mid Level"
-salary: "$75,000 - $100,000"
-description: |
-  Join our Engineering team as a Java Developer and build scalable, server-side applications using Java technologies. You'll work on enterprise-grade applications, microservices architecture, and contribute to our growing portfolio of client solutions.
-
-  This role offers the opportunity to work with modern Java frameworks and contribute to mission-critical applications that serve our diverse client base.
+description: "Build scalable Java applications and microservices. Work with Spring Framework, REST APIs, and enterprise-grade solutions for our diverse client base."
 requirements:
   - "3+ years of Java development experience"
   - "Strong proficiency in Java 8+ and object-oriented programming"
