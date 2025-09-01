@@ -1,5 +1,5 @@
 ---
-import StickyContactBar from '../components/StickyContactBar.tsx';
+import StickyContactBar from '../components/StickyContactBar';
 
 export interface Props {
   title: string;
@@ -30,7 +30,7 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site);
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={currentUrl} />
+    <meta property="og:url" content={currentUrl.toString()} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ATEK IT" />
     
