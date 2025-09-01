@@ -1,14 +1,10 @@
 ---
 title: "Python Developer"
-department: "Engineering"
+department: "Software & Development"
 location: "Remote"
 type: "Full-time"
 experience: "Mid Level"
-salary: "$70,000 - $95,000"
-description: |
-  We're seeking a Python Developer to join our Engineering team and develop server-side web applications using Python technologies. You'll work on data processing applications, web APIs, and automation tools that power our client solutions.
-
-  This role offers the opportunity to work with modern Python frameworks and contribute to diverse projects across multiple industries.
+description: "Build scalable backend systems and data processing pipelines using Python. Work with Django, Flask, and modern frameworks to create robust applications."
 requirements:
   - "3+ years of Python development experience"
   - "Strong proficiency in Python 3.x and object-oriented programming"

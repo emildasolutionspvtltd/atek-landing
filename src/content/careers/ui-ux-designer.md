@@ -1,14 +1,10 @@
 ---
 title: "UI/UX Designer"
-department: "Design"
+department: "Experience & Design"
 location: "Hybrid"
 type: "Full-time"
 experience: "Mid Level"
-salary: "$70,000 - $95,000"
-description: |
-  Join our Design team as a UI/UX Designer and create exceptional user experiences for our digital products. You'll work closely with product teams and developers to design intuitive interfaces that delight users and drive business success.
-
-  This role offers the opportunity to work on diverse design projects and shape the user experience of our technology solutions.
+description: "Create exceptional user experiences for digital products. Design intuitive interfaces using Figma, conduct user research, and collaborate with development teams."
 requirements:
   - "3+ years of UI/UX design experience"
   - "Proficiency in design tools (Figma, Sketch, Adobe Creative Suite)"

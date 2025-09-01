@@ -4,7 +4,7 @@ department: "Engineering"
 location: "Frisco, Texas"
 type: "Full-time"
 experience: "Senior Level"
-salary: "$139,500/year"
+salary: "$120,000 - $150,000"
 description: |
   We're seeking a Senior Software Engineer to join our Engineering team and deliver SDLC-based projects with cloud architecture and DevOps integration. You'll work with cutting-edge technologies and lead technical initiatives across multiple client projects.
 

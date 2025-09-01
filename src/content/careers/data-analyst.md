@@ -1,14 +1,10 @@
 ---
 title: "Data Analyst"
-department: "Data & Analytics"
+department: "Quality & Data"
 location: "Hybrid"
 type: "Full-time"
 experience: "Mid Level"
-salary: "$65,000 - $85,000"
-description: |
-  We're seeking a Data Analyst to join our Data & Analytics team and transform raw data into actionable insights with data modeling, visualization, and reporting. You'll work with stakeholders across the organization to support data-driven decision making.
-
-  This role offers the opportunity to work with diverse datasets and contribute to our analytics capabilities.
+description: "Transform raw data into actionable insights using SQL, Tableau, and statistical analysis. Support data-driven decision making across the organization."
 requirements:
   - "3+ years of data analysis experience"
   - "Strong proficiency in SQL and data querying"

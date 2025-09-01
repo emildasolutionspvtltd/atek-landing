@@ -38,7 +38,7 @@ export interface CareerPageContent {
 
 export function getCareerJobs(): CareerJob[] {
   const careersDirectory = join(process.cwd(), 'src/content/careers');
-  
+
   try {
     const filenames = readdirSync(careersDirectory);
     const jobs = filenames
@@ -46,16 +46,38 @@ export function getCareerJobs(): CareerJob[] {
       .map(name => {
         const fullPath = join(careersDirectory, name);
         const fileContents = readFileSync(fullPath, 'utf8');
-        const { data } = matter(fileContents);
-        
+        const { data, content } = matter(fileContents);
+
+        // Handle both markdown description and text description
+        const description = data.description || content || '';
+
+        // Ensure arrays exist with defaults
+        const requirements = Array.isArray(data.requirements) ? data.requirements : [];
+        const responsibilities = Array.isArray(data.responsibilities) ? data.responsibilities : [];
+        const benefits = Array.isArray(data.benefits) ? data.benefits : [];
+        const skills = Array.isArray(data.skills) ? data.skills : [];
+
         return {
           slug: name.replace(/\.md$/, ''),
-          ...data
+          title: data.title || '',
+          department: data.department || '',
+          location: data.location || '',
+          type: data.type || 'Full-time',
+          experience: data.experience || 'Entry Level',
+          salary: data.salary || '',
+          description: typeof description === 'string' ? description : '',
+          requirements,
+          responsibilities,
+          benefits,
+          skills,
+          published: data.published !== false, // Default to true
+          featured: data.featured === true,
+          date: data.date || new Date().toISOString()
         } as CareerJob;
       })
-      .filter(job => job.published)
+      .filter(job => job.published && job.title) // Ensure job has title
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
+
     return jobs;
   } catch (error) {
     console.warn('Could not read career jobs:', error);

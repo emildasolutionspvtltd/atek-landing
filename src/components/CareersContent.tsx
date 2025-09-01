@@ -50,31 +50,26 @@ const CareersContent = () => {
     fetchJobs();
   }, []);
 
-  // Organize CMS jobs by department
+  // Organize CMS jobs by department using the new department field
   const organizeJobsByDepartment = () => {
     const softwareRoles = cmsJobs.filter(job =>
-      job.department === 'Engineering' &&
-      ['Java Developer', 'Python Developer', '.NET Developer', 'React Developer', 'Full-Stack Developer', 'ETL Developer', 'Salesforce Developer', 'Frontend Developer', 'Backend Developer', 'Mobile App Developer', 'Junior Software Developer'].includes(job.title)
+      job.department === 'Software & Development' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
     );
 
     const engineeringRoles = cmsJobs.filter(job =>
-      (job.department === 'Infrastructure' || job.department === 'Engineering') &&
-      ['DevOps Engineer', 'Cloud Engineer', 'Network Administrator', 'Database Administrator', 'Site Reliability Engineer', 'Infrastructure Architect'].includes(job.title)
+      job.department === 'Engineering & Infrastructure' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
     );
 
     const designRoles = cmsJobs.filter(job =>
-      job.department === 'Design' ||
-      ['UI/UX Designer', 'Product Designer', 'UX Researcher'].includes(job.title)
+      job.department === 'Experience & Design' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
     );
 
     const qualityDataRoles = cmsJobs.filter(job =>
-      (job.department === 'Data & Analytics' || job.department === 'Engineering') &&
-      ['QA Engineer', 'QA Analyst', 'Data Analyst', 'Data Scientist', 'Business Intelligence Analyst', 'Machine Learning Engineer', 'Data Engineer', 'Test Automation Engineer', 'Performance Testing Specialist'].includes(job.title)
+      job.department === 'Quality & Data' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
     );
 
     const seniorRoles = cmsJobs.filter(job =>
-      job.experience === 'Lead/Principal' ||
-      ['Senior Technical Systems Architect', 'Senior Full Stack Developer'].includes(job.title)
+      job.experience === 'Senior Level' || job.experience === 'Lead/Principal'
     );
 
     return {
@@ -87,6 +82,14 @@ const CareersContent = () => {
   };
 
   const { softwareRoles, engineeringRoles, designRoles, qualityDataRoles, seniorRoles } = organizeJobsByDepartment();
+
+  // Helper function to truncate description to 2 lines (approximately 120 characters)
+  const truncateDescription = (description: string): string => {
+    if (!description) return '';
+    // Remove markdown formatting and limit to ~120 characters for 2 lines
+    const cleanText = description.replace(/[#*_`]/g, '').trim();
+    return cleanText.length > 120 ? cleanText.substring(0, 120) + '...' : cleanText;
+  };
 
   // Handle modal open
   const openModal = (jobTitle: string) => {
@@ -345,7 +348,7 @@ const CareersContent = () => {
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
-                        <p className="text-gray-600 text-sm">{r.description.substring(0, 100)}...</p>
+                        <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(r.description)}</p>
                         <div className="mt-2 flex flex-wrap gap-1">
                           <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{r.experience}</span>
                           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{r.location}</span>
@@ -379,7 +382,7 @@ const CareersContent = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                    <p className="text-gray-600 text-sm">{role.description.substring(0, 100)}...</p>
+                    <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
                     <div className="mt-2 flex flex-wrap gap-1">
                       <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
                       <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
@@ -407,7 +410,7 @@ const CareersContent = () => {
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="flex-1">
                 <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                <p className="text-gray-600 text-sm">{role.description.substring(0, 100)}...</p>
+                <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
                 <div className="mt-2 flex flex-wrap gap-1">
                   <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
                   <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
@@ -451,7 +454,7 @@ const CareersContent = () => {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex-1">
               <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-              <p className="text-gray-600 text-sm">{role.description.substring(0, 100)}...</p>
+              <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
               <div className="mt-2 flex flex-wrap gap-1">
                 <span className="text-xs bg-secondary-100 text-secondary-700 px-2 py-1 rounded">{role.experience}</span>
                 <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
@@ -488,7 +491,7 @@ const CareersContent = () => {
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                        <p className="text-gray-600 text-sm">{role.description.substring(0, 100)}...</p>
+                        <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
                         <div className="mt-2 flex flex-wrap gap-1">
                           <span className="text-xs bg-accent-100 text-accent-700 px-2 py-1 rounded">{role.experience}</span>
                           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
@@ -524,7 +527,7 @@ const CareersContent = () => {
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                        <p className="text-gray-600 text-sm">{role.description.substring(0, 100)}...</p>
+                        <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
                         <div className="mt-2 flex flex-wrap gap-1">
                           <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
                           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
