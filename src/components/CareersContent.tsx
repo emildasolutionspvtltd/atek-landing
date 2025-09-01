@@ -50,38 +50,33 @@ const CareersContent = () => {
     fetchJobs();
   }, []);
 
-  // Organize CMS jobs by department using the new department field
+  // Organize CMS jobs by department - simplified single collection
   const organizeJobsByDepartment = () => {
     const softwareRoles = cmsJobs.filter(job =>
-      job.department === 'Software & Development' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
+      job.department === 'Software & Development'
     );
 
     const engineeringRoles = cmsJobs.filter(job =>
-      job.department === 'Engineering & Infrastructure' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
+      job.department === 'Engineering & Infrastructure'
     );
 
     const designRoles = cmsJobs.filter(job =>
-      job.department === 'Experience & Design' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
+      job.department === 'Experience & Design'
     );
 
     const qualityDataRoles = cmsJobs.filter(job =>
-      job.department === 'Quality & Data' && job.experience !== 'Senior Level' && job.experience !== 'Lead/Principal'
-    );
-
-    const seniorRoles = cmsJobs.filter(job =>
-      job.experience === 'Senior Level' || job.experience === 'Lead/Principal'
+      job.department === 'Quality & Data'
     );
 
     return {
       softwareRoles,
       engineeringRoles,
       designRoles,
-      qualityDataRoles,
-      seniorRoles
+      qualityDataRoles
     };
   };
 
-  const { softwareRoles, engineeringRoles, designRoles, qualityDataRoles, seniorRoles } = organizeJobsByDepartment();
+  const { softwareRoles, engineeringRoles, designRoles, qualityDataRoles } = organizeJobsByDepartment();
 
   // Helper function to truncate description to 2 lines (approximately 120 characters)
   const truncateDescription = (description: string): string => {
@@ -548,86 +543,7 @@ const CareersContent = () => {
         </div>
       </section>
 
-      {/* Senior-Level Roles */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-white to-secondary-50/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="animate-on-scroll inline-flex items-center space-x-2 bg-accent-100/80 backdrop-blur-sm border border-accent-200/50 rounded-full px-4 sm:px-6 py-3 mb-6">
-              <Shield className="h-4 w-4 text-accent-600" />
-              <span className="text-xs sm:text-sm font-semibold text-accent-700">Senior Positions</span>
-            </div>
-            
-            <h2 className="animate-on-scroll text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 px-2 sm:px-0">
-              Senior-Level Roles <span className="bg-gradient-to-r from-accent-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">(Specialized Hiring)</span>
-            </h2>
-          </div>
 
-          <div className="space-y-8">
-            {isLoadingJobs ? (
-              // Loading state
-              Array.from({ length: 2 }).map((_, index) => (
-                <div key={index} className="animate-pulse bg-gray-200 rounded-2xl p-8 h-64"></div>
-              ))
-            ) : (
-              seniorRoles.map((role, index) => (
-                <div
-                  key={index}
-                  className="animate-on-scroll bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-soft hover:shadow-large transition-all duration-300 border border-gray-200"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{role.title}</h3>
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                      <span><strong>Department:</strong> {role.department}</span>
-                      <span><strong>Location:</strong> {role.location}</span>
-                      <span><strong>Experience:</strong> {role.experience}</span>
-                      {role.salary && <span><strong>Salary:</strong> {role.salary}</span>}
-                      {role.featured && <span className="bg-accent-100 text-accent-700 px-2 py-1 rounded text-xs"><strong>Featured Position</strong></span>}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3">Responsibilities:</h4>
-                      <ul className="space-y-2">
-                        {role.responsibilities.slice(0, 5).map((resp, respIndex) => (
-                          <li key={respIndex} className="flex items-start space-x-2">
-                            <CheckCircle className="h-4 w-4 text-primary-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-700 text-sm">{resp}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3">Requirements:</h4>
-                      <ul className="space-y-2 mb-4">
-                        {role.requirements.slice(0, 4).map((req, reqIndex) => (
-                          <li key={reqIndex} className="flex items-start space-x-2">
-                            <CheckCircle className="h-4 w-4 text-secondary-600 mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-700 text-sm">{req}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <div className="bg-primary-50 rounded-lg p-4">
-                        <button
-                          onClick={() => openModal(role.title)}
-                          className="w-full bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium"
-                        >
-                          Apply for {role.title}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* How to Apply */}
       <section className="py-16 sm:py-20 bg-white relative overflow-hidden">
