@@ -1,9 +1,29 @@
 backend:
   name: git-gateway
+  accept_roles:
+    - admin
+    - editor
   branch: main
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
+
+# Site URL for preview
+site_url: https://atek-landing.netlify.app
+display_url: https://atek-landing.netlify.app
+
+# Logo for admin interface
+logo_url: /ATEK IT LOGO white.svg
+
+# Editor settings
+editor:
+  preview: true
+
+# Publish mode
+publish_mode: editorial_workflow
+
+# Local backend for development
+local_backend: true
 
 collections:
   - name: "careers"

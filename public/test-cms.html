@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CMS Test Page</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <h1>Netlify CMS Test Page</h1>
+    
+    <div id="status">
+        <p>Loading...</p>
+    </div>
+    
+    <div id="user-info" style="display: none;">
+        <h2>User Information</h2>
+        <pre id="user-data"></pre>
+        <button onclick="logout()">Logout</button>
+    </div>
+    
+    <div id="login-section" style="display: none;">
+        <h2>Login Required</h2>
+        <button onclick="login()">Login</button>
+    </div>
+    
+    <div>
+        <h2>Test Links</h2>
+        <ul>
+            <li><a href="/admin/">Admin Panel</a></li>
+            <li><a href="/admin/index.html">Admin Index</a></li>
+            <li><a href="/">Home Page</a></li>
+        </ul>
+    </div>
+    
+    <div>
+        <h2>Debug Information</h2>
+        <div id="debug-info"></div>
+    </div>
+
+    <script>
+        function updateStatus(message) {
+            document.getElementById('status').innerHTML = '<p>' + message + '</p>';
+        }
+        
+        function updateDebug(info) {
+            document.getElementById('debug-info').innerHTML += '<p>' + info + '</p>';
+        }
+        
+        function login() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.open();
+            } else {
+                updateDebug('Netlify Identity not available');
+            }
+        }
+        
+        function logout() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.logout();
+            }
+        }
+        
+        // Initialize
+        if (window.netlifyIdentity) {
+            updateDebug('Netlify Identity widget loaded');
+            
+            window.netlifyIdentity.on("init", user => {
+                updateDebug('Identity initialized');
+                if (user) {
+                    updateStatus('User is logged in');
+                    document.getElementById('user-info').style.display = 'block';
+                    document.getElementById('login-section').style.display = 'none';
+                    document.getElementById('user-data').textContent = JSON.stringify(user, null, 2);
+                } else {
+                    updateStatus('User is not logged in');
+                    document.getElementById('user-info').style.display = 'none';
+                    document.getElementById('login-section').style.display = 'block';
+                }
+            });
+            
+            window.netlifyIdentity.on("login", user => {
+                updateDebug('User logged in: ' + user.email);
+                location.reload();
+            });
+            
+            window.netlifyIdentity.on("logout", () => {
+                updateDebug('User logged out');
+                location.reload();
+            });
+            
+            window.netlifyIdentity.on("error", err => {
+                updateDebug('Error: ' + err.message);
+            });
+        } else {
+            updateStatus('Netlify Identity widget not loaded');
+            updateDebug('window.netlifyIdentity is undefined');
+        }
+    </script>
+</body>
+</html>
