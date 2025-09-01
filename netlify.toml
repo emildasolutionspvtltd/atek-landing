@@ -31,17 +31,9 @@
   status = 301
   conditions = {Query = {recovery_token = ":recovery_token"}}
 
-# Git Gateway for Netlify CMS
-[[redirects]]
-  from = "/.netlify/git/*"
-  to = "/.netlify/functions/git-gateway"
-  status = 200
-
-# Identity service for authentication
-[[redirects]]
-  from = "/.netlify/identity/*"
-  to = "/.netlify/functions/identity"
-  status = 200
+# Git Gateway and Identity services are automatically available at:
+# /.netlify/git/* and /.netlify/identity/*
+# No manual redirects needed - Netlify handles these internally
 
 # Headers for security and CORS
 [[headers]]
