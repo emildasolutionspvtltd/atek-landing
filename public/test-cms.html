@@ -37,13 +37,51 @@
         <div id="debug-info"></div>
     </div>
 
+    <div>
+        <h2>Token Testing</h2>
+        <button onclick="testTokenForwarding()">Test Token Forwarding</button>
+        <button onclick="simulateConfirmation()">Simulate Email Confirmation</button>
+        <div id="token-info"></div>
+    </div>
+
     <script>
         function updateStatus(message) {
             document.getElementById('status').innerHTML = '<p>' + message + '</p>';
         }
-        
+
         function updateDebug(info) {
-            document.getElementById('debug-info').innerHTML += '<p>' + info + '</p>';
+            const timestamp = new Date().toLocaleTimeString();
+            document.getElementById('debug-info').innerHTML += '<p>[' + timestamp + '] ' + info + '</p>';
+        }
+
+        function updateTokenInfo(info) {
+            document.getElementById('token-info').innerHTML += '<p>' + info + '</p>';
+        }
+
+        function testTokenForwarding() {
+            const hash = window.location.hash;
+            updateTokenInfo('Current hash: ' + (hash || 'none'));
+
+            if (hash && (
+                hash.includes('confirmation_token=') ||
+                hash.includes('invite_token=') ||
+                hash.includes('recovery_token=')
+            )) {
+                updateTokenInfo('✅ Auth token detected in URL');
+                updateTokenInfo('Redirecting to admin panel...');
+                setTimeout(() => {
+                    window.location.href = '/admin/' + hash;
+                }, 2000);
+            } else {
+                updateTokenInfo('❌ No auth tokens found in URL');
+            }
+        }
+
+        function simulateConfirmation() {
+            const testToken = '#confirmation_token=test123&type=signup';
+            updateTokenInfo('Simulating confirmation with: ' + testToken);
+            window.location.hash = testToken;
+            testTokenForwarding();
         }
         
         function login() {

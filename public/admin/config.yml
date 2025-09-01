@@ -8,12 +8,17 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-# Site URL for preview
+# Site URL for preview - ensure proper token handling
 site_url: https://atek-landing.netlify.app
 display_url: https://atek-landing.netlify.app
 
 # Logo for admin interface
 logo_url: /ATEK IT LOGO white.svg
+
+# Authentication settings
+auth:
+  providers:
+    - name: email
 
 # Editor settings
 editor:

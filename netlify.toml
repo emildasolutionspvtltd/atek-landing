@@ -5,11 +5,31 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Netlify CMS admin access
+# Netlify CMS admin access - preserve hash fragments for auth tokens
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
+  force = false
+
+# Handle auth token redirects specifically
+[[redirects]]
+  from = "/#*"
+  to = "/admin/#:splat"
+  status = 301
+  conditions = {Query = {confirmation_token = ":confirmation_token"}}
+
+[[redirects]]
+  from = "/#*"
+  to = "/admin/#:splat"
+  status = 301
+  conditions = {Query = {invite_token = ":invite_token"}}
+
+[[redirects]]
+  from = "/#*"
+  to = "/admin/#:splat"
+  status = 301
+  conditions = {Query = {recovery_token = ":recovery_token"}}
 
 # Git Gateway for Netlify CMS
 [[redirects]]

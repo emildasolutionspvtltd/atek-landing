@@ -53,33 +53,70 @@
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="https://unpkg.com/netlify-cms@^2.10.79/dist/netlify-cms.js"></script>
 <script>
-    // Initialize Netlify Identity with debugging
-    if (window.netlifyIdentity) {
-        console.log('Netlify Identity widget loaded');
+    // Enhanced Netlify Identity initialization with token processing
+    function initializeNetlifyIdentity() {
+        if (window.netlifyIdentity) {
+            console.log('Netlify Identity widget loaded in admin panel');
 
-        window.netlifyIdentity.on("init", user => {
-            console.log('Netlify Identity initialized', user);
-            if (!user) {
-                console.log('No user found, setting up login handler');
-                window.netlifyIdentity.on("login", () => {
-                    console.log('User logged in, redirecting to admin');
-                    document.location.href = "/admin/";
-                });
-            } else {
-                console.log('User already logged in:', user);
+            // Process any tokens in the URL hash immediately
+            const hash = window.location.hash;
+            if (hash && (
+                hash.includes('confirmation_token=') ||
+                hash.includes('invite_token=') ||
+                hash.includes('recovery_token=') ||
+                hash.includes('access_token=')
+            )) {
+                console.log('Processing auth token in admin panel:', hash);
+                // Let the Identity widget handle the token
+                window.netlifyIdentity.init();
             }
-        });
 
-        window.netlifyIdentity.on("logout", () => {
-            console.log('User logged out');
-            document.location.href = "/";
-        });
+            window.netlifyIdentity.on("init", user => {
+                console.log('Netlify Identity initialized in admin panel', user);
+                if (!user) {
+                    console.log('No user found, setting up login handler');
+                    window.netlifyIdentity.on("login", (user) => {
+                        console.log('User logged in successfully:', user.email);
+                        // Stay on admin page after login
+                        window.location.reload();
+                    });
+                } else {
+                    console.log('User already logged in:', user.email);
+                    // User is authenticated, CMS should load
+                }
+            });
 
-        window.netlifyIdentity.on("error", err => {
-            console.error('Netlify Identity error:', err);
-        });
+            window.netlifyIdentity.on("logout", () => {
+                console.log('User logged out from admin panel');
+                document.location.href = "/";
+            });
+
+            window.netlifyIdentity.on("error", err => {
+                console.error('Netlify Identity error in admin panel:', err);
+            });
+
+            // Handle email confirmation events
+            window.netlifyIdentity.on("confirm", (user) => {
+                console.log('Email confirmed for user:', user.email);
+                window.location.reload();
+            });
+
+            // Handle password recovery events
+            window.netlifyIdentity.on("recover", (user) => {
+                console.log('Password recovery for user:', user.email);
+                window.location.reload();
+            });
+
+        } else {
+            console.error('Netlify Identity widget not loaded in admin panel');
+        }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeNetlifyIdentity);
     } else {
-        console.error('Netlify Identity widget not loaded');
+        initializeNetlifyIdentity();
     }
 
     // Custom preview styles
