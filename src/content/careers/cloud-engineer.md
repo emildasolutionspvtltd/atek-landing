@@ -21,7 +21,7 @@ responsibilities:
   - Automate cloud deployments and management tasks
   - Collaborate with development teams on cloud architecture
   - Provide technical guidance on cloud best practices
-title: Haru Cloud Engineer
+title: Cloud Engineer
 description: >
   Join our Infrastructure team as a Cloud Engineer and help design, implement,
   and manage cloud-based solutions for our clients and internal systems. You'll
