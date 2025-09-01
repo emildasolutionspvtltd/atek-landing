@@ -1,6 +1,6 @@
 ---
 title: "Backend Developer"
-department: "Engineering"
+department: "Software & Development"
 location: "Remote"
 type: "Full-time"
 experience: "Senior Level"

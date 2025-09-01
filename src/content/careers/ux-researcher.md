@@ -1,6 +1,6 @@
 ---
 title: "UX Researcher"
-department: "Design"
+department: "Experience & Design"
 location: "Frisco, Texas"
 type: "Full-time"
 experience: "Mid Level"

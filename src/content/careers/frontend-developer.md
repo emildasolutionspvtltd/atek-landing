@@ -1,6 +1,6 @@
 ---
 title: "Frontend Developer"
-department: "Engineering"
+department: "Software & Development"
 location: "Frisco, Texas"
 type: "Full-time"
 experience: "Mid Level"

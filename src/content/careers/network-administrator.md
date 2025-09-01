@@ -1,6 +1,6 @@
 ---
 title: "Network Administrator"
-department: "Infrastructure"
+department: "Engineering & Infrastructure"
 location: "Frisco, Texas"
 type: "Full-time"
 experience: "Mid Level"
