@@ -1,6 +1,6 @@
 ---
 title: "Data Scientist"
-department: "Data & Analytics"
+department: "Quality & Data"
 location: "Remote"
 type: "Full-time"
 experience: "Mid Level"

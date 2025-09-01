@@ -1,6 +1,6 @@
 ---
 title: "Cloud Engineer"
-department: "Infrastructure"
+department: "Engineering & Infrastructure"
 location: "Remote"
 type: "Full-time"
 experience: "Mid Level"

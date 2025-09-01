@@ -1,6 +1,6 @@
 ---
 title: "Business Intelligence Analyst"
-department: "Data & Analytics"
+department: "Quality & Data"
 location: "Frisco, Texas"
 type: "Full-time"
 experience: "Mid Level"
