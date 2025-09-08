@@ -74,7 +74,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"></div>
 
       {/* Animated Logo - Top Right Corner - Moved lower */}
-      <div className="absolute top-[10%] md:top-[10%] right-6 z-30">
+      <div className="absolute top-[10%] md:top-[12.5%] right-6 z-30">
         <img
           src="/grow-logo.svg"
           alt="Grow Logo"
