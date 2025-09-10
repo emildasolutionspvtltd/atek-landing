@@ -1,20 +1,98 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   BookOpen, TrendingUp, Cloud, Code, BarChart3, Lightbulb,
   Download, Mail, ArrowRight, Star, Target, Zap, Settings,
   Database, Globe, Users, FileText, CheckCircle, Sparkles,
-  Brain, Cpu, Network, Shield, Activity, PieChart
+  Brain, Cpu, Network, Shield, Activity, PieChart, AlertCircle, Loader2
 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const InsightsContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [newsletterData, setNewsletterData] = useState({
+    fullName: '',
+    email: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const observer = initSmoothAnimations(sectionRef.current);
     return () => cleanupAnimations(observer);
   }, []);
+
+  // Handle newsletter form input changes
+  const handleNewsletterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewsletterData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  // Newsletter form validation
+  const validateNewsletterForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!newsletterData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+    }
+
+    if (!newsletterData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newsletterData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle newsletter form submission
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateNewsletterForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Create FormData for submission
+      const submitData = new FormData();
+      submitData.append('fullName', newsletterData.fullName);
+      submitData.append('email', newsletterData.email);
+      submitData.append('type', 'newsletter');
+      submitData.append('recipients', 'dev.emildasolutions@gmail.com,info@atekit.com');
+
+      // Simulate API call (replace with actual endpoint)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // In a real implementation, you would send to your backend:
+      // const response = await fetch('/api/newsletter', {
+      //   method: 'POST',
+      //   body: submitData
+      // });
+
+      setSubmitStatus('success');
+      setNewsletterData({ fullName: '', email: '' });
+
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+
+    } catch (error) {
+      setSubmitStatus('error');
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const whyFollowReasons = [
     {
@@ -307,27 +385,45 @@ const InsightsContent = () => {
 
           <div className="animate-on-scroll max-w-2xl mx-auto">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-soft border border-gray-200">
-              <form className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                  />
+              {submitStatus === 'success' ? (
+                <div className="text-center py-8">
+                  <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Successfully Subscribed!</h4>
+                  <p className="text-gray-600">Thank you for subscribing to our newsletter. You'll receive the latest insights and updates.</p>
                 </div>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-8 py-4 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300 font-semibold flex items-center justify-center space-x-2"
-                >
-                  <span>Subscribe Now</span>
-                  <Mail className="h-5 w-5" />
-                </button>
-              </form>
+              ) : (
+                <form className="space-y-4" netlify data-netlify="true" method="POST" name="newsletter">
+                  <input type="hidden" name="form-name" value="newsletter" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <input
+                        type="text"
+                        name="fullName"
+                        placeholder="Full Name"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-8 py-4 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300 font-semibold flex items-center justify-center space-x-2"
+                  >
+                    <span>Subscribe Now</span>
+                    <Mail className="h-5 w-5" />
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

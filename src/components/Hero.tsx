@@ -136,7 +136,7 @@ const Hero = () => {
               </a>
               
               <a
-                href="/contact"
+                href="/contact#contact-section"
                 className="group bg-white/80 backdrop-blur-sm border-2 border-primary-300 text-primary-700 px-6 py-3 md:px-10 md:py-5 rounded-2xl font-semibold text-base md:text-lg shadow-medium hover:shadow-large hover:bg-white transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="flex items-center space-x-3">

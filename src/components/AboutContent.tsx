@@ -432,7 +432,7 @@ const AboutContent = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/contact"
+              href="/contact#contact-section"
               className="group bg-white text-primary-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold text-base sm:text-lg shadow-medium hover:shadow-large transform hover:-translate-y-1"
             >
               <div className="flex items-center justify-center space-x-2">
@@ -441,7 +441,7 @@ const AboutContent = () => {
               </div>
             </a>
             <a
-              href="/contact"
+              href="/contact#contact-section"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
             >
               <div className="flex items-center justify-center space-x-2">

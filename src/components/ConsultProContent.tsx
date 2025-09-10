@@ -658,15 +658,7 @@ const ConsultProContent = () => {
               </div>
             </a>
 
-            <a
-              href="/contact"
-              className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <span>Download Product Sheet</span>
-                <Download className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
-              </div>
-            </a>
+
 
             <a
               href="/contact"

@@ -184,9 +184,12 @@ const CareersContent = () => {
         submitData.append('resume', formData.resume);
       }
       
+      // Add recipient emails
+      submitData.append('recipients', 'dev.emildasolutions@gmail.com,info@atekit.com');
+
       // Simulate API call (replace with actual endpoint)
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // In a real implementation, you would send to your backend:
       // const response = await fetch('/api/applications', {
       //   method: 'POST',
@@ -583,7 +586,9 @@ const CareersContent = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="flex items-center justify-center space-x-3">
                 <MapPin className="h-5 w-5 flex-shrink-0" />
-                <span className="text-sm">7460 Warren Pkwy, Suite 100-148, Frisco, TX 75034</span>
+                <a href="https://maps.app.goo.gl/9ja3HF3kQjsYn2LP7" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-gray-200 transition-colors duration-200">
+                  7460 Warren Pkwy, Suite 100-148, Frisco, TX 75034
+                </a>
               </div>
               <div className="flex items-center justify-center space-x-3">
                 <Phone className="h-5 w-5 flex-shrink-0" />
@@ -599,26 +604,7 @@ const CareersContent = () => {
               </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
-                className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
-              >
-                <div className="flex items-center justify-center space-x-2">
-                  <span>Join Our Talent Pool</span>
-                  <Users className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
-                </div>
-              </a>
-              <button
-                onClick={() => openModal('')}
-                className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
-              >
-                <div className="flex items-center justify-center space-x-2">
-                  <span>Apply Now</span>
-                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
-              </button>
-            </div>
+
           </div>
         </div>
       </section>

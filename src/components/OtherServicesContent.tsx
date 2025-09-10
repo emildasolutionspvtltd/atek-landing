@@ -233,7 +233,7 @@ const OtherServicesContent = () => {
               {/* Primary and Secondary CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a
-                  href="/contact"
+                  href="/contact#contact-section"
                   className="group relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-semibold text-lg shadow-large hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
                 >
                   <div className="flex items-center space-x-3">
@@ -576,7 +576,7 @@ const OtherServicesContent = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/contact"
+              href="/contact#contact-section"
               className="group bg-white text-primary-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition-all duration-300 font-semibold text-base sm:text-lg shadow-medium hover:shadow-large transform hover:-translate-y-1"
             >
               <div className="flex items-center justify-center space-x-2">
