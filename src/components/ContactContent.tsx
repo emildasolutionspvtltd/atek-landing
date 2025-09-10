@@ -1,15 +1,120 @@
-import React, { useEffect, useRef } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, Star, CheckCircle, ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { MapPin, Phone, Mail, Clock, Send, Star, CheckCircle, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const ContactContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const observer = initSmoothAnimations(sectionRef.current);
     return () => cleanupAnimations(observer);
   }, []);
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  // Form validation
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'Subject is required';
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Create FormData for submission
+      const submitData = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        submitData.append(key, value);
+      });
+
+      // Add recipient emails
+      submitData.append('recipients', 'dev.emildasolutions@gmail.com,info@atekit.com');
+
+      // Simulate API call (replace with actual endpoint)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // In a real implementation, you would send to your backend:
+      // const response = await fetch('/api/contact', {
+      //   method: 'POST',
+      //   body: submitData
+      // });
+
+      setSubmitStatus('success');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        company: '',
+        subject: '',
+        message: ''
+      });
+
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+
+    } catch (error) {
+      setSubmitStatus('error');
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div ref={sectionRef}>
@@ -62,7 +167,7 @@ const ContactContent = () => {
       </div>
 
       {/* Contact Information and Form */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-neutral-50 via-white to-primary-50/30 relative overflow-hidden">
+      <section id="contact-section" className="py-16 sm:py-20 bg-gradient-to-br from-neutral-50 via-white to-primary-50/30 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-hero-pattern opacity-20"></div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl"></div>
@@ -89,10 +194,10 @@ const ContactContent = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
-                      <p className="text-gray-600">
+                      <a href="https://maps.app.goo.gl/9ja3HF3kQjsYn2LP7" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-primary-600 transition-colors duration-200">
                         7460 Warren Pkwy, Suite 100-148<br />
                         Frisco, TX 75034
-                      </p>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -134,7 +239,7 @@ const ContactContent = () => {
                       <h3 className="font-semibold text-gray-900 mb-1">Business Hours</h3>
                       <p className="text-gray-600">
                         Monday - Friday: 9:00 AM - 6:00 PM<br />
-                        Saturday: 10:00 AM - 4:00 PM<br />
+                        Saturday: Closed<br />
                         Sunday: Closed
                       </p>
                     </div>
@@ -155,113 +260,135 @@ const ContactContent = () => {
                   Start Your <span className="bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent font-serif-display font-normal italic">Project</span>
                 </h2>
                 
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                        First Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
-                      />
-                    </div>
+                {submitStatus === 'success' ? (
+                  <div className="text-center py-8">
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Message Sent Successfully!</h4>
+                    <p className="text-gray-600">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                  </div>
+                ) : (
+                  <form id="contact-form" className="space-y-6" netlify data-netlify="true" method="POST" name="contact">
+                    <input type="hidden" name="form-name" value="contact" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                          First Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="firstName"
+                          name="firstName"
+                          required
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                        />
+                      </div>
                     
+                      <div>
+                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                          Last Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="lastName"
+                          name="lastName"
+                          required
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                        />
+                      </div>
+                    </div>
+
                     <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name *
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address *
                       </label>
                       <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
+                        type="email"
+                        id="email"
+                        name="email"
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
                       />
                     </div>
-                  </div>
 
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                      />
+                    </div>
 
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
-                    />
-                  </div>
+                    <div>
+                      <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
+                        Service Interested In
+                      </label>
+                      <select
+                        id="service"
+                        name="service"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                      >
+                        <option value="">Select a service</option>
+                        <option value="paypilot">Pay Pilot SaaS</option>
+                        <option value="consulting">IT Consulting</option>
+                        <option value="development">Software Development</option>
+                        <option value="managed-it">Managed IT Services</option>
+                        <option value="devops">DevOps & Cloud</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
 
-                  <div>
-                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                      Service Interested In
-                    </label>
-                    <select
-                      id="service"
-                      name="service"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                    <div>
+                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                        Subject *
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 bg-white/80 backdrop-blur-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        rows={6}
+                        required
+                        placeholder="Tell us about your project or requirements..."
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 resize-vertical bg-white/80 backdrop-blur-sm"
+                      ></textarea>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-8 py-4 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300 font-semibold flex items-center justify-center space-x-2 shadow-medium hover:shadow-large transform hover:-translate-y-1"
                     >
-                      <option value="">Select a service</option>
-                      <option value="paypilot">Pay Pilot SaaS</option>
-                      <option value="consulting">IT Consulting</option>
-                      <option value="development">Software Development</option>
-                      <option value="managed-it">Managed IT Services</option>
-                      <option value="devops">DevOps & Cloud</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={6}
-                      required
-                      placeholder="Tell us about your project or requirements..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 resize-vertical bg-white/80 backdrop-blur-sm"
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-8 py-4 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all duration-300 font-semibold flex items-center justify-center space-x-2 shadow-medium hover:shadow-large transform hover:-translate-y-1"
-                  >
-                    <span>Send Message</span>
-                    <Send className="h-5 w-5" />
-                  </button>
-                </form>
+                      <span>Send Message</span>
+                      <Send className="h-5 w-5" />
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
           </div>
@@ -304,7 +431,9 @@ const ContactContent = () => {
             </div>
             <div className="mt-4 text-center">
               <p className="text-gray-600 mb-2">
-                <strong>7460 Warren Pkwy, Suite 100-148, Frisco, TX 75034</strong>
+                <a href="https://maps.app.goo.gl/9ja3HF3kQjsYn2LP7" target="_blank" rel="noopener noreferrer" className="font-bold hover:text-primary-600 transition-colors duration-200">
+                  7460 Warren Pkwy, Suite 100-148, Frisco, TX 75034
+                </a>
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
@@ -355,7 +484,7 @@ const ContactContent = () => {
             </a>
             
             <a
-              href="mailto:info@atekit.com?subject=Demo Request"
+              href="#contact-section"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
             >
               <div className="flex items-center justify-center space-x-2">

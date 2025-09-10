@@ -63,15 +63,15 @@ const CallToAction = () => {
             
             <div className="space-y-3 sm:space-y-4">
               <a
-                href="/contact"
+                href="/contact#contact-section"
                 className="w-full bg-primary-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold flex items-center justify-center space-x-2 text-sm sm:text-base"
               >
                 <span>Contact Us</span>
                 <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
-              
+
               <a
-                href="mailto:info@atekit.com?subject=Demo Request"
+                href="/contact#contact-section"
                 className="w-full border-2 border-white/30 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg hover:bg-white/10 transition-colors duration-200 font-semibold flex items-center justify-center space-x-2 text-sm sm:text-base"
               >
                 <span>Schedule a Demo</span>

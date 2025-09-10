@@ -19,7 +19,7 @@ const StickyContactBar = () => {
       id: 'mail',
       icon: <Mail className="h-3 w-3 md:h-5 md:w-5" />,
       label: 'Contact Us',
-      action: () => window.location.href = '/contact',
+      action: () => window.location.href = '/contact#contact-section',
       bgColor: 'bg-orange-500',
       hoverBgColor: 'hover:bg-orange-600',
       labelBgColor: 'bg-orange-500',
