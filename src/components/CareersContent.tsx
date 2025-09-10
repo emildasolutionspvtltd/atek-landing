@@ -3,7 +3,7 @@ import {
   Zap, Users, TrendingUp, DollarSign, Globe, Shield,
   Code, Cloud, Database, Palette, TestTube, BarChart3,
   MapPin, Phone, Mail, ArrowRight, Star, CheckCircle,
-  X, Upload, AlertCircle, Loader2
+  X
 } from 'lucide-react';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 import type { CareerJob } from '../utils/careers';
@@ -12,15 +12,7 @@ const CareersContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState('');
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
-  const [formData, setFormData] = React.useState({
-    name: '',
-    jobRole: '',
-    email: '',
-    resume: null as File | null
-  });
-  const [errors, setErrors] = React.useState<Record<string, string>>({});
+
   const [cmsJobs, setCmsJobs] = useState<CareerJob[]>([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
 
@@ -89,124 +81,28 @@ const CareersContent = () => {
   // Handle modal open
   const openModal = (jobTitle: string) => {
     setSelectedJob(jobTitle);
-    setFormData(prev => ({ ...prev, jobRole: jobTitle }));
     setIsModalOpen(true);
-    setSubmitStatus('idle');
-    setErrors({});
+    // Set the job role in the form after modal opens
+    setTimeout(() => {
+      const jobRoleSelect = document.getElementById('jobRole') as HTMLSelectElement;
+      if (jobRoleSelect) {
+        jobRoleSelect.value = jobTitle;
+      }
+    }, 100);
   };
 
   // Handle modal close
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedJob('');
-    setFormData({ name: '', jobRole: '', email: '', resume: null });
-    setErrors({});
-    setSubmitStatus('idle');
-  };
-
-  // Handle form input changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+    // Reset form fields
+    const form = document.querySelector('form[name="job-application"]') as HTMLFormElement;
+    if (form) {
+      form.reset();
     }
   };
 
-  // Handle file upload
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const allowedTypes = [
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      ];
-      
-      if (!allowedTypes.includes(file.type)) {
-        setErrors(prev => ({ ...prev, resume: 'Please upload only PDF or DOC/DOCX files' }));
-        return;
-      }
-      
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        setErrors(prev => ({ ...prev, resume: 'File size must be less than 5MB' }));
-        return;
-      }
-      
-      setFormData(prev => ({ ...prev, resume: file }));
-      setErrors(prev => ({ ...prev, resume: '' }));
-    }
-  };
 
-  // Form validation
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!formData.jobRole) {
-      newErrors.jobRole = 'Please select a job role';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-    
-    if (!formData.resume) {
-      newErrors.resume = 'Resume is required';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    try {
-      // Create FormData for file upload
-      const submitData = new FormData();
-      submitData.append('name', formData.name);
-      submitData.append('jobRole', formData.jobRole);
-      submitData.append('email', formData.email);
-      if (formData.resume) {
-        submitData.append('resume', formData.resume);
-      }
-      
-      // Add recipient emails
-      submitData.append('recipients', 'dev.emildasolutions@gmail.com,info@atekit.com');
-
-      // Simulate API call (replace with actual endpoint)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // In a real implementation, you would send to your backend:
-      // const response = await fetch('/api/applications', {
-      //   method: 'POST',
-      //   body: submitData
-      // });
-      
-      setSubmitStatus('success');
-      setTimeout(() => {
-        closeModal();
-      }, 2000);
-      
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const whyJoinReasons = [
     {
@@ -574,7 +470,7 @@ const CareersContent = () => {
                 </a>
               </p>
               <p className="text-gray-600">
-                For senior positions, please include the relevant job code in your application.
+                Please include the relevant job title in your application.
               </p>
             </div>
           </div>
@@ -626,14 +522,9 @@ const CareersContent = () => {
 
             {/* Modal Content */}
             <div className="p-6">
-              {submitStatus === 'success' ? (
-                <div className="text-center py-8">
-                  <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Application Submitted!</h4>
-                  <p className="text-gray-600">Thank you for your interest. We'll review your application and get back to you soon.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+
+                <form netlify data-netlify="true" data-netlify-uploads="true" method="POST" name="job-application" className="space-y-4">
+                  <input type="hidden" name="form-name" value="job-application" />
                   {/* Applicant Name */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -643,19 +534,10 @@ const CareersContent = () => {
                       type="text"
                       id="name"
                       name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 ${
-                        errors.name ? 'border-red-500' : 'border-gray-300'
-                      }`}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
                       placeholder="Enter your full name"
                     />
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600 flex items-center">
-                        <AlertCircle className="h-4 w-4 mr-1" />
-                        {errors.name}
-                      </p>
-                    )}
                   </div>
 
                   {/* Job Role */}
@@ -666,11 +548,8 @@ const CareersContent = () => {
                     <select
                       id="jobRole"
                       name="jobRole"
-                      value={formData.jobRole}
-                      onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 ${
-                        errors.jobRole ? 'border-red-500' : 'border-gray-300'
-                      }`}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
                     >
                       <option value="">Select a position</option>
                       {softwareRoles.length > 0 && (
@@ -709,25 +588,11 @@ const CareersContent = () => {
                           ))}
                         </optgroup>
                       )}
-                      {seniorRoles.length > 0 && (
-                        <optgroup label="Senior Positions">
-                          {seniorRoles.map((role) => (
-                            <option key={role.title} value={role.title}>
-                              {role.title}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
+
                       <optgroup label="Other">
                         <option value="Other">Other Position</option>
                       </optgroup>
                     </select>
-                    {errors.jobRole && (
-                      <p className="mt-1 text-sm text-red-600 flex items-center">
-                        <AlertCircle className="h-4 w-4 mr-1" />
-                        {errors.jobRole}
-                      </p>
-                    )}
                   </div>
 
                   {/* Email Address */}
@@ -739,19 +604,10 @@ const CareersContent = () => {
                       type="email"
                       id="email"
                       name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
-                      }`}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
                       placeholder="Enter your email address"
                     />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600 flex items-center">
-                        <AlertCircle className="h-4 w-4 mr-1" />
-                        {errors.email}
-                      </p>
-                    )}
                   </div>
 
                   {/* Resume Upload */}
@@ -759,67 +615,31 @@ const CareersContent = () => {
                     <label htmlFor="resume" className="block text-sm font-medium text-gray-700 mb-1">
                       Resume Upload *
                     </label>
-                    <div className="relative">
-                      <input
-                        type="file"
-                        id="resume"
-                        name="resume"
-                        onChange={handleFileChange}
-                        accept=".pdf,.doc,.docx"
-                        className="hidden"
-                      />
-                      <label
-                        htmlFor="resume"
-                        className={`w-full px-3 py-2 border-2 border-dashed rounded-lg cursor-pointer hover:border-primary-400 transition-colors duration-200 flex items-center justify-center space-x-2 ${
-                          errors.resume ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                      >
-                        <Upload className="h-5 w-5 text-gray-400" />
-                        <span className="text-gray-600">
-                          {formData.resume ? formData.resume.name : 'Choose PDF or DOC file'}
-                        </span>
-                      </label>
-                    </div>
+                    <input
+                      type="file"
+                      id="resume"
+                      name="resume"
+                      required
+                      accept=".pdf,.doc,.docx"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                    />
                     <p className="mt-1 text-xs text-gray-500">
                       Accepted formats: PDF, DOC, DOCX (Max 5MB)
                     </p>
-                    {errors.resume && (
-                      <p className="mt-1 text-sm text-red-600 flex items-center">
-                        <AlertCircle className="h-4 w-4 mr-1" />
-                        {errors.resume}
-                      </p>
-                    )}
                   </div>
 
                   {/* Submit Button */}
                   <div className="pt-4">
                     <button
                       type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 font-semibold flex items-center justify-center space-x-2"
+                      className="w-full bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          <span>Submitting...</span>
-                        </>
-                      ) : (
-                        <span>Submit Application</span>
-                      )}
+                      Submit Application
                     </button>
                   </div>
 
-                  {/* Error Message */}
-                  {submitStatus === 'error' && (
-                    <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm text-red-600 flex items-center">
-                        <AlertCircle className="h-4 w-4 mr-2" />
-                        Failed to submit application. Please try again.
-                      </p>
-                    </div>
-                  )}
+
                 </form>
-              )}
             </div>
           </div>
         </div>
