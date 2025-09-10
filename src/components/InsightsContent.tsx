@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
+import { getGuides, type DownloadableGuide } from '../utils/guides';
 
 const InsightsContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -14,6 +15,8 @@ const InsightsContent = () => {
     fullName: '',
     email: ''
   });
+  const [guides, setGuides] = useState<DownloadableGuide[]>([]);
+  const [isLoadingGuides, setIsLoadingGuides] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -21,6 +24,23 @@ const InsightsContent = () => {
   useEffect(() => {
     const observer = initSmoothAnimations(sectionRef.current);
     return () => cleanupAnimations(observer);
+  }, []);
+
+  // Fetch guides from CMS
+  useEffect(() => {
+    const fetchGuides = async () => {
+      try {
+        setIsLoadingGuides(true);
+        const fetchedGuides = await getGuides();
+        setGuides(fetchedGuides);
+      } catch (error) {
+        console.error('Error fetching guides:', error);
+      } finally {
+        setIsLoadingGuides(false);
+      }
+    };
+
+    fetchGuides();
   }, []);
 
   // Handle newsletter form input changes
@@ -338,27 +358,67 @@ const InsightsContent = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularDownloads.map((download, index) => (
-              <div
-                key={index}
-                className="animate-on-scroll group bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 cursor-pointer"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-primary-600">
-                    {download.icon}
+            {isLoadingGuides ? (
+              // Loading state
+              Array.from({ length: 4 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md border border-gray-100"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mb-4 animate-pulse">
+                    <Loader2 className="h-5 w-5 text-gray-400 animate-spin" />
+                  </div>
+                  <div className="h-4 bg-gray-200 rounded mb-2 animate-pulse"></div>
+                  <div className="h-3 bg-gray-200 rounded mb-4 animate-pulse"></div>
+                  <div className="flex items-center space-x-2">
+                    <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
                   </div>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-300">
-                  {download.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">{download.description}</p>
-                <div className="flex items-center space-x-2 text-primary-600 font-medium text-sm group-hover:text-primary-700 transition-colors duration-300">
-                  <Download className="h-4 w-4" />
-                  <span>Download</span>
-                </div>
+              ))
+            ) : guides.length > 0 ? (
+              // CMS guides
+              guides.map((guide, index) => (
+                <a
+                  key={guide.slug}
+                  href={guide.pdfFile}
+                  download
+                  className="animate-on-scroll group bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 cursor-pointer block"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <img
+                      src={guide.icon}
+                      alt={`${guide.title} icon`}
+                      className="h-6 w-6 object-contain"
+                      onError={(e) => {
+                        // Fallback to default icon if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <FileText className="h-6 w-6 text-primary-600 hidden" />
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-300">
+                    {guide.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">{guide.description}</p>
+                  <div className="flex items-center space-x-2 text-primary-600 font-medium text-sm group-hover:text-primary-700 transition-colors duration-300">
+                    <Download className="h-4 w-4" />
+                    <span>Download</span>
+                  </div>
+                </a>
+              ))
+            ) : (
+              // No guides available
+              <div className="col-span-full text-center py-12">
+                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No Guides Available</h3>
+                <p className="text-gray-600">Check back soon for downloadable guides and toolkits.</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -456,6 +516,8 @@ const InsightsContent = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact our editorial team:</h3>
               <a
                 href="mailto:info@atekit.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
               >
                 <Mail className="h-5 w-5" />

@@ -45,8 +45,10 @@ const CallToAction = () => {
               <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-primary-400 mt-1 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-base sm:text-lg mb-1">Email Us</h3>
-                <a 
-                  href="mailto:info@atekit.com" 
+                <a
+                  href="mailto:info@atekit.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors duration-200 text-sm sm:text-base"
                 >
                   info@atekit.com

@@ -82,24 +82,37 @@ const CareersContent = () => {
   const openModal = (jobTitle: string) => {
     setSelectedJob(jobTitle);
     setIsModalOpen(true);
-    // Set the job role in the form after modal opens
-    setTimeout(() => {
-      const jobRoleSelect = document.getElementById('jobRole') as HTMLSelectElement;
-      if (jobRoleSelect) {
-        jobRoleSelect.value = jobTitle;
-      }
-    }, 100);
   };
 
   // Handle modal close
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedJob('');
-    // Reset form fields
-    const form = document.querySelector('form[name="job-application"]') as HTMLFormElement;
-    if (form) {
-      form.reset();
-    }
+  };
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Add form-name for Netlify
+    formData.append('form-name', 'job-application');
+
+    // Submit to Netlify (for file uploads, we need to use FormData directly)
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(() => {
+      alert('Application submitted successfully! We will review your application and get back to you soon.');
+      closeModal();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('There was an error submitting your application. Please try again.');
+    });
   };
 
 
@@ -136,6 +149,23 @@ const CareersContent = () => {
 
   return (
     <div ref={sectionRef}>
+      {/* Hidden form for Netlify detection - DO NOT REMOVE */}
+      <form
+        name="job-application"
+        netlify
+        data-netlify="true"
+        data-netlify-uploads="true"
+        method="POST"
+        hidden
+      >
+        <input type="hidden" name="form-name" value="job-application" />
+        <input type="text" name="name" />
+        <select name="jobRole">
+          <option value="">Select a position</option>
+        </select>
+        <input type="email" name="email" />
+        <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+      </form>
       {/* Why Join ATEK IT */}
       <section className="py-12 sm:py-2 bg-white relative overflow-hidden">
         {/* Background Elements */}
@@ -465,7 +495,7 @@ const CareersContent = () => {
             <div className="text-center space-y-4">
               <p className="text-lg text-gray-700">
                 Use our <strong>Online Application Form</strong> or email your resume to{' '}
-                <a href="mailto:info@atekit.com" className="text-primary-600 hover:text-primary-800 underline font-semibold">
+                <a href="mailto: info@atekit.com" className="text-primary-600 hover:text-primary-800 underline font-semibold">
                   info@atekit.com
                 </a>
               </p>
@@ -494,7 +524,7 @@ const CareersContent = () => {
               </div>
               <div className="flex items-center justify-center space-x-3">
                 <Mail className="h-5 w-5 flex-shrink-0" />
-                <a href="mailto:info@atekit.com" className="text-sm hover:text-gray-200 transition-colors duration-200">
+                <a href="mailto: info@atekit.com" className="text-sm hover:text-gray-200 transition-colors duration-200">
                   info@atekit.com
                 </a>
               </div>
@@ -523,7 +553,7 @@ const CareersContent = () => {
             {/* Modal Content */}
             <div className="p-6">
 
-                <form netlify data-netlify="true" data-netlify-uploads="true" method="POST" name="job-application" className="space-y-4">
+                <form method="POST" name="job-application" onSubmit={handleSubmit} className="space-y-4">
                   <input type="hidden" name="form-name" value="job-application" />
                   {/* Applicant Name */}
                   <div>
@@ -548,6 +578,8 @@ const CareersContent = () => {
                     <select
                       id="jobRole"
                       name="jobRole"
+                      value={selectedJob}
+                      onChange={(e) => setSelectedJob(e.target.value)}
                       required
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
                     >

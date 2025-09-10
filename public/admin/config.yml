@@ -71,3 +71,19 @@ collections:
           - { label: "Application Instructions", name: "application_instructions", widget: "markdown" }
           - { label: "Contact Email", name: "contact_email", widget: "string" }
           - { label: "Office Location", name: "office_location", widget: "string" }
+
+  - name: "downloadable-guides"
+    label: "Downloadable Guides"
+    folder: "src/content/guides"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Guide Name", name: "title", widget: "string", required: true, hint: "Example: Digital Transformation Readiness Checklist" }
+      - { label: "Description", name: "description", widget: "string", required: true, pattern: [".{1,150}", "Must be 150 characters or less"], hint: "Brief description of the guide (max 150 characters)" }
+      - { label: "Icon", name: "icon", widget: "image", required: true, media_folder: "/public/images/guides", public_folder: "/images/guides", hint: "Upload SVG, PNG, or JPG icon for the guide" }
+      - { label: "PDF File", name: "pdfFile", widget: "file", required: true, media_folder: "/public/downloads/guides", public_folder: "/downloads/guides", hint: "Upload the PDF guide file" }
+      - { label: "Published", name: "published", widget: "boolean", default: false, hint: "Set to true to make this guide visible on the website" }
+      - { label: "Sort Order", name: "order", widget: "number", default: 1, hint: "Lower numbers appear first" }
+      - { label: "Publish Date", name: "date", widget: "datetime", default: "" }
