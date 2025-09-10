@@ -353,7 +353,7 @@ const PartnersContent = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-white flex-shrink-0" />
-                <a href="mailto:info@atekit.com" className="text-white hover:text-gray-200 transition-colors duration-200 text-sm sm:text-base">
+                <a href="mailto:info@atekit.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-200 transition-colors duration-200 text-sm sm:text-base">
                   info@atekit.com
                 </a>
               </div>

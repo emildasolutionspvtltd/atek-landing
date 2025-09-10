@@ -414,6 +414,8 @@ const OtherServicesContent = () => {
                     <div className="mt-4">
                       <a
                         href="mailto:info@atekit.com?subject=Pay Pilot Demo Request"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
                       >
                         <span>Pay Pilot Demo</span>
@@ -561,7 +563,7 @@ const OtherServicesContent = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-white flex-shrink-0" />
-                <a href="mailto:info@atekit.com" className="text-white hover:text-gray-200 transition-colors duration-200 text-sm sm:text-base">
+                <a href="mailto:info@atekit.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-200 transition-colors duration-200 text-sm sm:text-base">
                   info@atekit.com
                 </a>
               </div>

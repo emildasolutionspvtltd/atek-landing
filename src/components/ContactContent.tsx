@@ -223,7 +223,7 @@ const ContactContent = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                      <a href="mailto:info@atekit.com" className="text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                      <a href="mailto:info@atekit.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-primary-600 transition-colors duration-200">
                         info@atekit.com
                       </a>
                     </div>
