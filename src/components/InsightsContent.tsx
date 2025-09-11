@@ -516,8 +516,6 @@ const InsightsContent = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact our editorial team:</h3>
               <a
                 href="mailto:info@atekit.com"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-semibold"
               >
                 <Mail className="h-5 w-5" />
@@ -563,7 +561,7 @@ const InsightsContent = () => {
             </a>
 
             <a
-              href="/contact"
+              href="/contact#contact-section"
               className="group border-2 border-white/30 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-base sm:text-lg backdrop-blur-sm"
             >
               <div className="flex items-center justify-center space-x-2">

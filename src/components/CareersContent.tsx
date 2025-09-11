@@ -167,7 +167,7 @@ const CareersContent = () => {
         <input type="file" name="resume" accept=".pdf,.doc,.docx" />
       </form>
       {/* Why Join ATEK IT */}
-      <section className="py-12 sm:py-2 bg-white relative overflow-hidden">
+      <section className="py-12 sm:py-2 lg:pt-32 bg-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-secondary-100/40 to-transparent rounded-full blur-3xl"></div>

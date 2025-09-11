@@ -26,18 +26,15 @@ import Navigation from './Navigation.tsx';
 <script>
   // Enhanced header scroll effect
   const header = document.getElementById('header');
-  let lastScrollY = window.scrollY;
 
   window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY;
-    
+
     if (currentScrollY > 100) {
       header?.classList.add('scrolled');
     } else {
       header?.classList.remove('scrolled');
     }
-    
-    lastScrollY = currentScrollY;
   });
 </script>
 
