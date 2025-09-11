@@ -157,7 +157,7 @@ const WhyAtekIT = () => {
             </a>
             
             <a
-              href="/contact"
+              href="/contact#contact-section"
               className="group border-2 border-white/30 text-white px-4 sm:px-8 py-2 sm:py-4 rounded-xl sm:rounded-2xl hover:bg-white/10 transition-all duration-300 font-semibold text-sm sm:text-lg backdrop-blur-sm"
             >
               <div className="flex items-center justify-center space-x-2">

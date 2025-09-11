@@ -70,7 +70,7 @@ const SpecializedVerticals = () => {
             We work with organizations across various sectors. Let's discuss how we can help your specific industry.
           </p>
           <a
-            href="/contact"
+            href="/contact#contact-section"
             className="inline-flex items-center space-x-2 bg-white text-primary-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-semibold text-sm sm:text-base"
           >
             <span>Contact Our Team</span>

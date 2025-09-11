@@ -49,6 +49,20 @@ collections:
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
       - { label: "Publish Date", name: "date", widget: "datetime", default: "" }
 
+  - name: "job-categories"
+    label: "Job Categories"
+    folder: "src/content/job-categories"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Category Name", name: "name", widget: "string", hint: "The name of the job category (e.g., Software & Development)" }
+      - { label: "Category Icon", name: "icon", widget: "image", hint: "Upload an icon for this category" }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Order in which this category appears (1 = first)" }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Description", name: "description", widget: "text", required: false, hint: "Optional description of this category" }
+
   - name: "career-settings"
     label: "Career Page Settings"
     files:
