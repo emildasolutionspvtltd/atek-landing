@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  Target, Heart, Zap, Users, Globe, Award,
+  Target, Heart, Zap, Users, Globe,
   CheckCircle, Star, TrendingUp, Lightbulb,
   MapPin, Phone, Mail, ArrowRight, Settings,
   Code, Cloud, Network, BarChart3, Sparkles,

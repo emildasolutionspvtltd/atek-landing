@@ -20,6 +20,35 @@ const careersCollection = defineCollection({
   }),
 });
 
+// Define the guides collection schema
+const guidesCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    icon: z.string(),
+    pdfFile: z.string(),
+    published: z.boolean().default(true),
+    order: z.number().default(1),
+    date: z.coerce.date(),
+  }),
+});
+
+// Define the job categories collection schema
+const jobCategoriesCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    icon: z.string(),
+    order: z.number().default(1),
+    published: z.boolean().default(true),
+    description: z.string().optional(),
+    jobs: z.array(z.string()).optional(), // Array of job slugs associated with this category
+  }),
+});
+
 export const collections = {
   careers: careersCollection,
+  guides: guidesCollection,
+  'job-categories': jobCategoriesCollection,
 };

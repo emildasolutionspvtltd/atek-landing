@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import {
   Clock, Users, DollarSign, FileText, Bell, BarChart3, Shield,
   CheckCircle, Star, Target, TrendingUp, Zap, Settings,
-  Calendar, CreditCard, Download, Mail, Phone, MapPin,
-  ArrowRight, Sparkles, Cloud, Database, Smartphone,
-  PieChart, Activity, Globe, Lock, Lightbulb
+  CreditCard, Download, Mail, Phone, MapPin,
+  ArrowRight, Sparkles, Cloud, Database,
+  Activity, Globe, Lock, Lightbulb
 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
 import { cn } from '@/lib/utils';

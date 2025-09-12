@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { 
-  Lightbulb, Code, Layers, Shield, Cloud, Network, BarChart3, Cog, 
-  CheckCircle, Star, Target, TrendingUp, Zap, Settings, 
-  Calendar, CreditCard, Download, Mail, Phone, MapPin,
-  ArrowRight, Sparkles, Database, Smartphone, Globe, Lock,
-  Activity, PieChart, Users, FileText, Monitor, Server,
-  Cpu, HardDrive, Wifi, Eye, AlertTriangle, Wrench
+import {
+  Lightbulb, Code, Layers, Shield, Cloud, Network, BarChart3, Cog,
+  CheckCircle, Target, Mail, Phone, MapPin,
+  ArrowRight, Sparkles, Globe, FileText
 } from 'lucide-react';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 

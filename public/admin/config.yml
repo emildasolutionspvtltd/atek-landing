@@ -62,6 +62,7 @@ collections:
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Order in which this category appears (1 = first)" }
       - { label: "Published", name: "published", widget: "boolean", default: true }
       - { label: "Description", name: "description", widget: "text", required: false, hint: "Optional description of this category" }
+      - { label: "Associated Jobs", name: "jobs", widget: "relation", collection: "careers", search_fields: ["title", "department"], value_field: "{{slug}}", display_fields: ["title", "department"], multiple: true, required: false, hint: "Select which job listings belong to this category" }
 
   - name: "career-settings"
     label: "Career Page Settings"

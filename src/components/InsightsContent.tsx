@@ -3,7 +3,7 @@ import {
   BookOpen, TrendingUp, Cloud, Code, BarChart3, Lightbulb,
   Download, Mail, ArrowRight, Star, Target, Zap, Settings,
   Database, Globe, Users, FileText, CheckCircle, Sparkles,
-  Brain, Cpu, Network, Shield, Activity, PieChart, AlertCircle, Loader2
+  Brain, Network, Shield, Activity, Loader2
 } from 'lucide-react';
 import { AuroraBackground } from './ui/aurora-background';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
