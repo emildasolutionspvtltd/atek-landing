@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Zap, Users, TrendingUp, DollarSign, Globe, Shield,
-  Code, Cloud, Database, Palette, TestTube, BarChart3,
+  Code, Cloud, Database, Palette, BarChart3,
   MapPin, Phone, Mail, ArrowRight, Star, CheckCircle,
-  X
+  X, Briefcase, Settings, Target
 } from 'lucide-react';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 import type { CareerJob } from '../utils/careers';
+import { fetchJobCategories, organizeJobsByCategories, getCategoryIcon, getCategoryColor } from '../utils/jobCategories';
+import type { JobCategory, JobCategoryWithJobs } from '../utils/jobCategories';
 
 const CareersContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -15,60 +17,69 @@ const CareersContent = () => {
 
   const [cmsJobs, setCmsJobs] = useState<CareerJob[]>([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+  const [jobCategories, setJobCategories] = useState<JobCategory[]>([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [organizedJobs, setOrganizedJobs] = useState<JobCategoryWithJobs[]>([]);
 
   useEffect(() => {
     const observer = initSmoothAnimations(sectionRef.current);
     return () => cleanupAnimations(observer);
   }, []);
 
-  // Fetch CMS jobs on component mount
+  // Fetch CMS jobs and job categories on component mount
   useEffect(() => {
-    const fetchJobs = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('/api/careers');
-        if (response.ok) {
-          const jobs = await response.json();
+        // Fetch jobs and categories in parallel
+        const [jobsResponse, categoriesData] = await Promise.all([
+          fetch('/api/careers'),
+          fetchJobCategories()
+        ]);
+
+        if (jobsResponse.ok) {
+          const jobs = await jobsResponse.json();
           setCmsJobs(jobs);
         } else {
-          console.warn('Failed to fetch CMS jobs, using fallback');
+          console.warn('Failed to fetch CMS jobs');
         }
+
+        setJobCategories(categoriesData);
+        setIsLoadingCategories(false);
       } catch (error) {
-        console.warn('Error fetching CMS jobs:', error);
+        console.warn('Error fetching data:', error);
+        setIsLoadingCategories(false);
       } finally {
         setIsLoadingJobs(false);
       }
     };
 
-    fetchJobs();
+    fetchData();
   }, []);
 
-  // Organize CMS jobs by department - simplified single collection
-  const organizeJobsByDepartment = () => {
-    const softwareRoles = cmsJobs.filter(job =>
-      job.department === 'Software & Development'
-    );
+  // Organize jobs by categories when both jobs and categories are loaded
+  useEffect(() => {
+    if (!isLoadingJobs && !isLoadingCategories && jobCategories.length > 0) {
+      const organized = organizeJobsByCategories(jobCategories, cmsJobs);
+      setOrganizedJobs(organized);
+    }
+  }, [cmsJobs, jobCategories, isLoadingJobs, isLoadingCategories]);
 
-    const engineeringRoles = cmsJobs.filter(job =>
-      job.department === 'Engineering & Infrastructure'
-    );
-
-    const designRoles = cmsJobs.filter(job =>
-      job.department === 'Experience & Design'
-    );
-
-    const qualityDataRoles = cmsJobs.filter(job =>
-      job.department === 'Quality & Data'
-    );
-
-    return {
-      softwareRoles,
-      engineeringRoles,
-      designRoles,
-      qualityDataRoles
+  // Helper function to get icon component based on category name
+  const getIconComponent = (categoryName: string) => {
+    const iconName = getCategoryIcon(categoryName);
+    const iconMap: Record<string, React.ComponentType<any>> = {
+      Code,
+      Cloud,
+      Palette,
+      BarChart3,
+      Settings,
+      Shield,
+      Target,
+      TrendingUp,
+      Briefcase,
     };
+    return iconMap[iconName] || Briefcase;
   };
-
-  const { softwareRoles, engineeringRoles, designRoles, qualityDataRoles } = organizeJobsByDepartment();
 
   // Helper function to truncate description to 2 lines (approximately 120 characters)
   const truncateDescription = (description: string): string => {
@@ -238,237 +249,145 @@ const CareersContent = () => {
             </p>
           </div>
 
-          {/* Software & Development Roles */}
-          <div className="mb-12">
-  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
-    <Code className="h-6 w-6 text-primary-600 mr-3" />
-    Software & Development Roles
-  </h3>
-
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {isLoadingJobs ? (
-      // Loading state
-      Array.from({ length: 6 }).map((_, index) => (
-        <div key={index} className="animate-pulse bg-gray-200 rounded-xl p-6 h-32"></div>
-      ))
-    ) : (
-      softwareRoles.map((role, index, arr) => {
-        const remainder = arr.length % 3;
-        const isSecondLast = index === arr.length - 2;
-        const isLast = index === arr.length - 1;
-
-        // ✅ Handle last 2
-        if (remainder === 2 && isSecondLast) {
-          const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
-          return (
-            <div key="last-two" className="lg:col-span-3 hidden lg:block">
-              <div className="flex justify-center gap-4">
-                {lastTwo.map((r, i) => (
-                  <div
-                    key={i}
-                    className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
-                    style={{ animationDelay: `${(arr.length - 2 + i) * 0.05}s` }}
-                  >
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
-                        <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(r.description)}</p>
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{r.experience}</span>
-                          <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{r.location}</span>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => openModal(r.title)}
-                        className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                      >
-                        Apply Now
-                      </button>
-                    </div>
+          {/* Dynamic Job Categories */}
+          {isLoadingJobs || isLoadingCategories ? (
+            // Loading state
+            <div className="space-y-12">
+              {Array.from({ length: 3 }).map((_, categoryIndex) => (
+                <div key={categoryIndex} className="mb-12">
+                  <div className="animate-pulse flex items-center mb-6">
+                    <div className="h-6 w-6 bg-gray-300 rounded mr-3"></div>
+                    <div className="h-6 w-48 bg-gray-300 rounded"></div>
                   </div>
-                ))}
-              </div>
-            </div>
-          );
-        }
-
-        // skip the last card (since it's in lastTwo above)
-        if (remainder === 2 && isLast) return null;
-
-        // ✅ Handle last 1
-        if (remainder === 1 && isLast) {
-          return (
-            <div key="last-one" className="lg:col-span-3 flex justify-center">
-              <div
-                className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                    <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
-                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <div key={index} className="animate-pulse bg-gray-200 rounded-xl p-6 h-32"></div>
+                    ))}
                   </div>
-                  <button
-                    onClick={() => openModal(role.title)}
-                    className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                  >
-                    Apply Now
-                  </button>
                 </div>
-              </div>
+              ))}
             </div>
-          );
-        }
+          ) : (
+            organizedJobs.map((category, categoryIndex) => {
+              if (category.jobListings.length === 0) return null;
 
-        // ✅ Normal items
-        return (
-          <div
-            key={index}
-            className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-            style={{ animationDelay: `${index * 0.05}s` }}
-          >
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              <div className="flex-1">
-                <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-                <div className="mt-2 flex flex-wrap gap-1">
-                  <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
-                  <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
-                </div>
-              </div>
-              <button
-                onClick={() => openModal(role.title)}
-                className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-              >
-                Apply Now
-              </button>
-            </div>
-          </div>
-        );
-      })
-    )}
-  </div>
-</div>
+              const IconComponent = getIconComponent(category.name);
+              const categoryColor = getCategoryColor(category.order);
 
+              return (
+                <div key={category.id} className="mb-12">
+                  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <IconComponent className={`h-6 w-6 text-${categoryColor}-600 mr-3`} />
+                    {category.name}
+                  </h3>
 
-          {/* Engineering & Infrastructure */}
-          <div className="mb-12">
-  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
-    <Cloud className="h-6 w-6 text-secondary-600 mr-3" />
-    Engineering & Infrastructure
-  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {category.jobListings.map((role, index, arr) => {
+                      const remainder = arr.length % 3;
+                      const isSecondLast = index === arr.length - 2;
+                      const isLast = index === arr.length - 1;
 
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {isLoadingJobs ? (
-      // Loading state
-      Array.from({ length: 4 }).map((_, index) => (
-        <div key={index} className="animate-pulse bg-gray-200 rounded-xl p-6 h-32"></div>
-      ))
-    ) : (
-      engineeringRoles.map((role, index) => (
-        <div
-          key={index}
-          className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-          style={{ animationDelay: `${index * 0.05}s` }}
-        >
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div className="flex-1">
-              <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-              <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-              <div className="mt-2 flex flex-wrap gap-1">
-                <span className="text-xs bg-secondary-100 text-secondary-700 px-2 py-1 rounded">{role.experience}</span>
-                <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
-              </div>
-            </div>
-            <button
-              onClick={() => openModal(role.title)}
-              className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-            >
-              Apply Now
-            </button>
-          </div>
-        </div>
-      ))
-    )}
-  </div>
-</div>
+                      // Handle last 2 items when remainder is 2
+                      if (remainder === 2 && isSecondLast) {
+                        const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
+                        return (
+                          <div key="last-two" className="lg:col-span-3 hidden lg:block">
+                            <div className="flex justify-center gap-4">
+                              {lastTwo.map((r, i) => (
+                                <div
+                                  key={i}
+                                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
+                                  style={{ animationDelay: `${(arr.length - 2 + i) * 0.05}s` }}
+                                >
+                                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                    <div className="flex-1">
+                                      <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
+                                      <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(r.description)}</p>
+                                      <div className="mt-2 flex flex-wrap gap-1">
+                                        <span className={`text-xs bg-${categoryColor}-100 text-${categoryColor}-700 px-2 py-1 rounded`}>{r.experience}</span>
+                                        <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{r.location}</span>
+                                      </div>
+                                    </div>
+                                    <button
+                                      onClick={() => openModal(r.title)}
+                                      className={`bg-${categoryColor}-600 text-white px-4 py-2 rounded-lg hover:bg-${categoryColor}-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap`}
+                                    >
+                                      Apply Now
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      }
 
+                      // Skip rendering for last item when remainder is 2 (handled above)
+                      if (remainder === 2 && isLast) {
+                        return null;
+                      }
 
-          {/* Design & UX Roles */}
-          {designRoles.length > 0 && (
-            <div className="mb-12">
-              <h3 className="animate-on-scroll text-lg font-bold text-gray-900 mb-4 flex items-center">
-                <Palette className="h-5 w-5 text-accent-600 mr-2" />
-                Experience & Design
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {designRoles.map((role, index) => (
-                  <div
-                    key={index}
-                    className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                        <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          <span className="text-xs bg-accent-100 text-accent-700 px-2 py-1 rounded">{role.experience}</span>
-                          <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
+                      // Handle last 1 item when remainder is 1
+                      if (remainder === 1 && isLast) {
+                        return (
+                          <div key="last-one" className="lg:col-span-3 flex justify-center">
+                            <div
+                              className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
+                              style={{ animationDelay: `${index * 0.05}s` }}
+                            >
+                              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                                <div className="flex-1">
+                                  <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+                                  <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
+                                  <div className="mt-2 flex flex-wrap gap-1">
+                                    <span className={`text-xs bg-${categoryColor}-100 text-${categoryColor}-700 px-2 py-1 rounded`}>{role.experience}</span>
+                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={() => openModal(role.title)}
+                                  className={`bg-${categoryColor}-600 text-white px-4 py-2 rounded-lg hover:bg-${categoryColor}-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap`}
+                                >
+                                  Apply Now
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      // Regular grid items
+                      return (
+                        <div
+                          key={index}
+                          className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+                          style={{ animationDelay: `${index * 0.05}s` }}
+                        >
+                          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+                              <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
+                              <div className="mt-2 flex flex-wrap gap-1">
+                                <span className={`text-xs bg-${categoryColor}-100 text-${categoryColor}-700 px-2 py-1 rounded`}>{role.experience}</span>
+                                <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => openModal(role.title)}
+                              className={`bg-${categoryColor}-600 text-white px-4 py-2 rounded-lg hover:bg-${categoryColor}-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap`}
+                            >
+                              Apply Now
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      <button
-                        onClick={() => openModal(role.title)}
-                        className="bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                      >
-                        Apply Now
-                      </button>
-                    </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              );
+            })
           )}
 
-          {/* Quality & Data Roles */}
-          {qualityDataRoles.length > 0 && (
-            <div className="mb-12">
-              <h3 className="animate-on-scroll text-lg font-bold text-gray-900 mb-4 flex items-center">
-                <BarChart3 className="h-5 w-5 text-primary-600 mr-2" />
-                Quality & Data
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {qualityDataRoles.map((role, index) => (
-                  <div
-                    key={index}
-                    className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                        <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
-                          <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => openModal(role.title)}
-                        className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                      >
-                        Apply Now
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
@@ -584,42 +503,17 @@ const CareersContent = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
                     >
                       <option value="">Select a position</option>
-                      {softwareRoles.length > 0 && (
-                        <optgroup label="Software & Development">
-                          {softwareRoles.map((role) => (
-                            <option key={role.title} value={role.title}>
-                              {role.title}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      {engineeringRoles.length > 0 && (
-                        <optgroup label="Engineering & Infrastructure">
-                          {engineeringRoles.map((role) => (
-                            <option key={role.title} value={role.title}>
-                              {role.title}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      {designRoles.length > 0 && (
-                        <optgroup label="Experience & Design">
-                          {designRoles.map((role) => (
-                            <option key={role.title} value={role.title}>
-                              {role.title}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      {qualityDataRoles.length > 0 && (
-                        <optgroup label="Quality & Data">
-                          {qualityDataRoles.map((role) => (
-                            <option key={role.title} value={role.title}>
-                              {role.title}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
+                      {organizedJobs.map((category) => (
+                        category.jobListings.length > 0 && (
+                          <optgroup key={category.id} label={category.name}>
+                            {category.jobListings.map((role) => (
+                              <option key={role.title} value={role.title}>
+                                {role.title}
+                              </option>
+                            ))}
+                          </optgroup>
+                        )
+                      ))}
 
                       <optgroup label="Other">
                         <option value="Other">Other Position</option>

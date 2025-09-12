@@ -1,48 +1,89 @@
-import { readFileSync, readdirSync } from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
+import type { CareerJob } from './careers';
 
 export interface JobCategory {
-  slug: string;
+  id: string;
   name: string;
   icon: string;
   order: number;
   published: boolean;
   description?: string;
+  jobs?: string[];
+  slug: string;
 }
 
-export const getJobCategories = (): JobCategory[] => {
+export interface JobCategoryWithJobs extends JobCategory {
+  jobListings: CareerJob[];
+}
+
+/**
+ * Fetch job categories from API endpoint (for client-side use)
+ */
+export async function fetchJobCategories(): Promise<JobCategory[]> {
   try {
-    const categoriesDirectory = join(process.cwd(), 'src/content/job-categories');
-    const filenames = readdirSync(categoriesDirectory);
-    
-    const categories = filenames
-      .filter(name => name.endsWith('.md'))
-      .map(name => {
-        const fullPath = join(categoriesDirectory, name);
-        const fileContents = readFileSync(fullPath, 'utf8');
-        const { data } = matter(fileContents);
-        
-        return {
-          slug: name.replace(/\.md$/, ''),
-          name: data.name,
-          icon: data.icon,
-          order: data.order || 999,
-          published: data.published !== false,
-          description: data.description,
-        } as JobCategory;
-      })
-      .filter(category => category.published)
-      .sort((a, b) => a.order - b.order);
-    
-    return categories;
+    const response = await fetch('/api/job-categories');
+    if (!response.ok) {
+      throw new Error('Failed to fetch job categories');
+    }
+    return await response.json();
   } catch (error) {
-    console.warn('Error loading job categories:', error);
+    console.error('Error fetching job categories:', error);
     return [];
   }
-};
+}
 
-export const getJobCategoryBySlug = (slug: string): JobCategory | null => {
-  const categories = getJobCategories();
-  return categories.find(category => category.slug === slug) || null;
-};
+/**
+ * Organize jobs by categories based on CMS configuration
+ */
+export function organizeJobsByCategories(
+  categories: JobCategory[],
+  jobs: CareerJob[]
+): JobCategoryWithJobs[] {
+  return categories.map(category => {
+    // Find jobs that belong to this category
+    let categoryJobs: CareerJob[] = [];
+
+    if (category.jobs && category.jobs.length > 0) {
+      // Use the jobs specified in the category's multi-reference field
+      categoryJobs = jobs.filter(job =>
+        category.jobs!.includes(job.slug || job.title.toLowerCase().replace(/\s+/g, '-'))
+      );
+    } else {
+      // Fallback: match by department name for backward compatibility
+      categoryJobs = jobs.filter(job =>
+        job.department === category.name
+      );
+    }
+
+    return {
+      ...category,
+      jobListings: categoryJobs,
+    };
+  });
+}
+
+/**
+ * Get icon component name based on category name (fallback for missing icons)
+ */
+export function getCategoryIcon(categoryName: string): string {
+  const iconMap: Record<string, string> = {
+    'Software & Development': 'Code',
+    'Engineering & Infrastructure': 'Cloud',
+    'Experience & Design': 'Palette',
+    'Quality & Data': 'BarChart3',
+    'DevOps & Automation': 'Settings',
+    'Cybersecurity': 'Shield',
+    'Product Management': 'Target',
+    'Sales & Marketing': 'TrendingUp',
+  };
+
+  return iconMap[categoryName] || 'Briefcase';
+}
+
+/**
+ * Get category color based on order or name
+ */
+export function getCategoryColor(order: number): string {
+  const colors = ['primary', 'secondary', 'accent', 'primary'];
+  const colorIndex = (order - 1) % colors.length;
+  return colors[colorIndex];
+}
