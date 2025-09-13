@@ -43,7 +43,7 @@ collections:
       - { label: "Job Description", name: "description", widget: "text", hint: "Keep this to 2 lines maximum - a brief summary of the role" }
       - { label: "Job Level", name: "experience", widget: "select", options: ["Entry Level", "Mid Level"], hint: "Experience level required" }
       - { label: "Job Location", name: "location", widget: "string", default: "Frisco, Texas", hint: "Work location" }
-      - { label: "Job Type/Department", name: "department", widget: "select", options: ["Software & Development", "Engineering & Infrastructure", "Experience & Design", "Quality & Data"], hint: "Which category this job belongs to" }
+      - { label: "Job Category", name: "jobCategory", widget: "relation", collection: "job-categories", search_fields: ["name"], value_field: "name", display_fields: ["name"], required: true, hint: "Select which job category this position belongs to" }
       - { label: "Employment Type", name: "type", widget: "select", options: ["Full-time", "Part-time", "Contract", "Internship"], default: "Full-time" }
       - { label: "Published", name: "published", widget: "boolean", default: true }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
@@ -58,7 +58,6 @@ collections:
     format: "frontmatter"
     fields:
       - { label: "Category Name", name: "name", widget: "string", hint: "The name of the job category (e.g., Software & Development)" }
-      - { label: "Category Icon", name: "icon", widget: "image", hint: "Upload an icon for this category" }
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Order in which this category appears (1 = first)" }
       - { label: "Published", name: "published", widget: "boolean", default: true }
       - { label: "Description", name: "description", widget: "text", required: false, hint: "Optional description of this category" }

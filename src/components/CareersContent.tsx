@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Zap, Users, TrendingUp, DollarSign, Globe, Shield,
-  Code, Cloud, Database, Palette, BarChart3,
-  MapPin, Phone, Mail, ArrowRight, Star, CheckCircle,
-  X, Briefcase, Settings, Target
+  Code, MapPin, Phone, Mail, ArrowRight, Star, CheckCircle,
+  X
 } from 'lucide-react';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 import type { CareerJob } from '../utils/careers';
-import { fetchJobCategories, organizeJobsByCategories, getCategoryIcon, getCategoryColor } from '../utils/jobCategories';
+import { fetchJobCategories, organizeJobsByCategories, getCategoryColor } from '../utils/jobCategories';
 import type { JobCategory, JobCategoryWithJobs } from '../utils/jobCategories';
 
 const CareersContent = () => {
@@ -64,22 +63,7 @@ const CareersContent = () => {
     }
   }, [cmsJobs, jobCategories, isLoadingJobs, isLoadingCategories]);
 
-  // Helper function to get icon component based on category name
-  const getIconComponent = (categoryName: string) => {
-    const iconName = getCategoryIcon(categoryName);
-    const iconMap: Record<string, React.ComponentType<any>> = {
-      Code,
-      Cloud,
-      Palette,
-      BarChart3,
-      Settings,
-      Shield,
-      Target,
-      TrendingUp,
-      Briefcase,
-    };
-    return iconMap[iconName] || Briefcase;
-  };
+
 
   // Helper function to truncate description to 2 lines (approximately 120 characters)
   const truncateDescription = (description: string): string => {
@@ -271,13 +255,9 @@ const CareersContent = () => {
             organizedJobs.map((category, categoryIndex) => {
               if (category.jobListings.length === 0) return null;
 
-              const IconComponent = getIconComponent(category.name);
-              const categoryColor = getCategoryColor(category.order);
-
               return (
                 <div key={category.id} className="mb-12">
-                  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <IconComponent className={`h-6 w-6 text-${categoryColor}-600 mr-3`} />
+                  <h3 className="animate-on-scroll text-xl font-bold text-gray-900 mb-6">
                     {category.name}
                   </h3>
 
@@ -304,13 +284,13 @@ const CareersContent = () => {
                                       <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
                                       <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(r.description)}</p>
                                       <div className="mt-2 flex flex-wrap gap-1">
-                                        <span className={`text-xs bg-${categoryColor}-100 text-${categoryColor}-700 px-2 py-1 rounded`}>{r.experience}</span>
+                                        <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{r.experience}</span>
                                         <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{r.location}</span>
                                       </div>
                                     </div>
                                     <button
                                       onClick={() => openModal(r.title)}
-                                      className={`bg-${categoryColor}-600 text-white px-4 py-2 rounded-lg hover:bg-${categoryColor}-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap`}
+                                      className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
                                     >
                                       Apply Now
                                     </button>
@@ -340,13 +320,13 @@ const CareersContent = () => {
                                   <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
                                   <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
                                   <div className="mt-2 flex flex-wrap gap-1">
-                                    <span className={`text-xs bg-${categoryColor}-100 text-${categoryColor}-700 px-2 py-1 rounded`}>{role.experience}</span>
+                                    <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
                                     <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
                                   </div>
                                 </div>
                                 <button
                                   onClick={() => openModal(role.title)}
-                                  className={`bg-${categoryColor}-600 text-white px-4 py-2 rounded-lg hover:bg-${categoryColor}-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap`}
+                                  className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
                                 >
                                   Apply Now
                                 </button>
@@ -368,13 +348,13 @@ const CareersContent = () => {
                               <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
                               <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
                               <div className="mt-2 flex flex-wrap gap-1">
-                                <span className={`text-xs bg-${categoryColor}-100 text-${categoryColor}-700 px-2 py-1 rounded`}>{role.experience}</span>
+                                <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
                                 <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
                               </div>
                             </div>
                             <button
                               onClick={() => openModal(role.title)}
-                              className={`bg-${categoryColor}-600 text-white px-4 py-2 rounded-lg hover:bg-${categoryColor}-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap`}
+                              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
                             >
                               Apply Now
                             </button>

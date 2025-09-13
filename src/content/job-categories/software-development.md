@@ -1,6 +1,5 @@
 ---
 name: "Software & Development"
-icon: "/images/uploads/code-icon.svg"
 order: 1
 published: true
 description: "Full-stack development, frontend, backend, and mobile application development roles"
