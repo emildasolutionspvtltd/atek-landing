@@ -3,7 +3,6 @@ import type { CareerJob } from './careers';
 export interface JobCategory {
   id: string;
   name: string;
-  icon: string;
   order: number;
   published: boolean;
   description?: string;
@@ -48,9 +47,9 @@ export function organizeJobsByCategories(
         category.jobs!.includes(job.slug || job.title.toLowerCase().replace(/\s+/g, '-'))
       );
     } else {
-      // Fallback: match by department name for backward compatibility
+      // Match by jobCategory field (new) or department field (backward compatibility)
       categoryJobs = jobs.filter(job =>
-        job.department === category.name
+        (job as any).jobCategory === category.name || job.department === category.name
       );
     }
 
@@ -61,29 +60,12 @@ export function organizeJobsByCategories(
   });
 }
 
-/**
- * Get icon component name based on category name (fallback for missing icons)
- */
-export function getCategoryIcon(categoryName: string): string {
-  const iconMap: Record<string, string> = {
-    'Software & Development': 'Code',
-    'Engineering & Infrastructure': 'Cloud',
-    'Experience & Design': 'Palette',
-    'Quality & Data': 'BarChart3',
-    'DevOps & Automation': 'Settings',
-    'Cybersecurity': 'Shield',
-    'Product Management': 'Target',
-    'Sales & Marketing': 'TrendingUp',
-  };
 
-  return iconMap[categoryName] || 'Briefcase';
-}
 
 /**
- * Get category color based on order or name
+ * Get category color - standardized to purple for all categories
  */
 export function getCategoryColor(order: number): string {
-  const colors = ['primary', 'secondary', 'accent', 'primary'];
-  const colorIndex = (order - 1) % colors.length;
-  return colors[colorIndex];
+  // All categories now use primary (purple) color for consistent styling
+  return 'primary';
 }

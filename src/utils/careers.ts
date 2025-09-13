@@ -5,7 +5,8 @@ import matter from 'gray-matter';
 export interface CareerJob {
   slug: string;
   title: string;
-  department: string;
+  department?: string; // Keep for backward compatibility
+  jobCategory?: string; // New field for job category reference
   location: string;
   type: string;
   experience: string;

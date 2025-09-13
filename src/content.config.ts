@@ -4,7 +4,8 @@ const careersCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    department: z.string(),
+    department: z.string().optional(), // Keep for backward compatibility
+    jobCategory: z.string().optional(), // New field for job category reference
     location: z.string(),
     type: z.enum(['Full-time', 'Part-time', 'Contract', 'Internship']),
     experience: z.enum(['Entry Level', 'Mid Level', 'Senior Level', 'Lead/Principal']),
@@ -39,7 +40,6 @@ const jobCategoriesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
-    icon: z.string(),
     order: z.number().default(1),
     published: z.boolean().default(true),
     description: z.string().optional(),
