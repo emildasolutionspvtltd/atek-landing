@@ -9,10 +9,10 @@ const careersCollection = defineCollection({
     location: z.string(),
     type: z.enum(['Full-time', 'Part-time', 'Contract', 'Internship']),
     experience: z.enum(['Entry Level', 'Mid Level', 'Senior Level', 'Lead/Principal']),
-    salary: z.string().optional(),
+    salary: z.string().optional(), // Optional for backward compatibility
     description: z.string(),
-    requirements: z.array(z.string()),
-    responsibilities: z.array(z.string()),
+    requirements: z.array(z.string()).optional(), // Made optional for simplified CMS
+    responsibilities: z.array(z.string()).optional(), // Made optional for simplified CMS
     benefits: z.array(z.string()).optional(),
     skills: z.array(z.string()).optional(),
     published: z.boolean().default(true),

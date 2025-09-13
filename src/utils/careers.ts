@@ -12,10 +12,10 @@ export interface CareerJob {
   experience: string;
   salary?: string;
   description: string;
-  requirements: string[];
-  responsibilities: string[];
-  benefits: string[];
-  skills: string[];
+  requirements?: string[]; // Made optional for simplified CMS
+  responsibilities?: string[]; // Made optional for simplified CMS
+  benefits?: string[];
+  skills?: string[];
   published: boolean;
   featured: boolean;
   date: string;
