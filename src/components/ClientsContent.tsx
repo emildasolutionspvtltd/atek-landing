@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Heart, DollarSign, BookOpen, ShoppingBag, Settings, CheckCircle, Users, Lightbulb, Zap, Star, Target, TrendingUp, Network } from 'lucide-react';
+import { Heart, DollarSign, BookOpen, ShoppingBag, CheckCircle, Users, Lightbulb, Zap, Star, Target, TrendingUp, Network, Wrench } from 'lucide-react';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 
 const ClientsContent = () => {
@@ -37,10 +37,10 @@ const ClientsContent = () => {
       color: "primary"
     },
     {
-      icon: <Settings className="h-6 w-6 sm:h-8 sm:w-8" />,
+      icon: <Wrench className="h-6 w-6 sm:h-8 sm:w-8" />,
       title: "Manufacturing & Engineering",
-      description: "Specialized tools like Pay Pilot to streamline backend operations for consulting and staffing firms.",
-      features: ["Pay Pilot Platform", "Backend Operations", "Workflow Automation", "Performance Analytics"]
+      description: "Industrial automation systems, production monitoring, quality control platforms, and data-driven manufacturing optimization strategies.",
+      color: "secondary"
     }
   ];
 
