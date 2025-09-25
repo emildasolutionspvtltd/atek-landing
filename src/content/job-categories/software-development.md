@@ -8,6 +8,7 @@ jobs:
   - react-developer
   - python-developer
   - java-developer
+  - software-engineer-ref-job-code-sse-–-2502-has-multiple-openings
 ---
 
 Software & Development category includes all programming and development positions from junior to senior levels.
