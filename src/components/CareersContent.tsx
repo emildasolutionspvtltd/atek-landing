@@ -2,17 +2,103 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Zap, Users, TrendingUp, DollarSign, Globe, Shield,
   Code, MapPin, Phone, Mail, ArrowRight, Star, CheckCircle,
-  X
+  X, ChevronDown, ChevronUp, Heart, Award
 } from 'lucide-react';
 import { initSmoothAnimations, cleanupAnimations } from '../utils/smoothAnimations';
 import type { CareerJob } from '../utils/careers';
 import { fetchJobCategories, organizeJobsByCategories, getCategoryColor } from '../utils/jobCategories';
 import type { JobCategory, JobCategoryWithJobs } from '../utils/jobCategories';
 
+// Job Card Component
+interface JobCardProps {
+  role: CareerJob;
+  isExpanded: boolean;
+  onToggleExpansion: (jobTitle: string) => void;
+  onApplyClick: (jobTitle: string) => void;
+  animationDelay: string;
+  renderFullDescription: (description: string) => React.ReactNode;
+  getTruncatedDescription: (description: string) => string;
+}
+
+const JobCard: React.FC<JobCardProps> = ({
+  role,
+  isExpanded,
+  onToggleExpansion,
+  onApplyClick,
+  animationDelay,
+  renderFullDescription,
+  getTruncatedDescription
+}) => {
+  return (
+    <div
+      className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
+      style={{ animationDelay }}
+    >
+      <div className="flex flex-col gap-4">
+        {/* Job Header - Always Visible */}
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
+              <button
+                onClick={() => onToggleExpansion(role.title)}
+                className="text-gray-500 hover:text-gray-700 transition-colors duration-200 ml-2"
+                aria-label={isExpanded ? "Collapse job details" : "Expand job details"}
+              >
+                {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+              </button>
+            </div>
+            {!isExpanded && (
+              <p className="text-gray-600 text-sm line-clamp-2">{getTruncatedDescription(role.description)}</p>
+            )}
+            <div className="mt-2 flex flex-wrap gap-1">
+              <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
+              <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Expanded Content */}
+        {isExpanded && (
+          <div className="border-t border-gray-200 pt-4 space-y-4">
+            {/* Full Description */}
+            <div>
+              {renderFullDescription(role.description)}
+            </div>
+
+            {/* Apply Button in Expanded View */}
+            <div className="pt-2">
+              <button
+                onClick={() => onApplyClick(role.title)}
+                className="w-full bg-primary-600 text-white px-4 py-3 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm"
+              >
+                Apply for this Position
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Apply Button - Only show when collapsed */}
+        {!isExpanded && (
+          <div className="flex justify-end">
+            <button
+              onClick={() => onApplyClick(role.title)}
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
+            >
+              Apply Now
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const CareersContent = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedJob, setSelectedJob] = React.useState('');
+  const [expandedJob, setExpandedJob] = React.useState<string | null>(null);
 
   const [cmsJobs, setCmsJobs] = useState<CareerJob[]>([]);
   const [isLoadingJobs, setIsLoadingJobs] = useState(true);
@@ -65,13 +151,7 @@ const CareersContent = () => {
 
 
 
-  // Helper function to truncate description to 2 lines (approximately 120 characters)
-  const truncateDescription = (description: string): string => {
-    if (!description) return '';
-    // Remove markdown formatting and limit to ~120 characters for 2 lines
-    const cleanText = description.replace(/[#*_`]/g, '').trim();
-    return cleanText.length > 120 ? cleanText.substring(0, 120) + '...' : cleanText;
-  };
+
 
   // Handle modal open
   const openModal = (jobTitle: string) => {
@@ -83,6 +163,62 @@ const CareersContent = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedJob('');
+  };
+
+  // Handle job expansion (accordion-style: only one card can be expanded at a time)
+  const toggleJobExpansion = (jobTitle: string) => {
+    if (expandedJob === jobTitle) {
+      // If clicking the currently expanded job, collapse it
+      setExpandedJob(null);
+    } else {
+      // If clicking a different job, expand it (and collapse the previous one)
+      setExpandedJob(jobTitle);
+    }
+  };
+
+  // Check if job is expanded
+  const isJobExpanded = (jobTitle: string) => expandedJob === jobTitle;
+
+  // Parse markdown content for rich text display
+  const parseMarkdown = (text: string) => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n\n/g, '</p><p class="mb-4">')
+      .replace(/\n/g, '<br/>')
+      .replace(/\n\n/g, '</p><p class="mb-4">')
+      .replace(/\n/g, '<br/>');
+  };
+
+  // Render full description with markdown support
+  const renderFullDescription = (description: string) => {
+    if (!description) return null;
+
+    return (
+      <div
+        className="text-gray-600 text-sm leading-relaxed"
+        dangerouslySetInnerHTML={{
+          __html: parseMarkdown(description)
+        }}
+      />
+    );
+  };
+
+  // Get truncated text for collapsed view (first 2 lines)
+  const getTruncatedDescription = (description: string) => {
+    if (!description) return '';
+
+    // Remove markdown formatting for truncation
+    const cleanText = description.replace(/[#*_`]/g, '').trim();
+
+    // Split by lines and take first 2, or truncate by character count
+    const lines = cleanText.split('\n').filter(line => line.trim());
+    if (lines.length >= 2) {
+      return lines.slice(0, 2).join(' ');
+    }
+
+    // If less than 2 lines, truncate by character count (~120 chars for 2 lines)
+    return cleanText.length > 120 ? cleanText.substring(0, 120) + '...' : cleanText;
   };
 
   // Handle form submission
@@ -147,7 +283,6 @@ const CareersContent = () => {
       {/* Hidden form for Netlify detection - DO NOT REMOVE */}
       <form
         name="job-application"
-        netlify
         data-netlify="true"
         data-netlify-uploads="true"
         method="POST"
@@ -243,7 +378,7 @@ const CareersContent = () => {
                     <div className="h-6 w-6 bg-gray-300 rounded mr-3"></div>
                     <div className="h-6 w-48 bg-gray-300 rounded"></div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
                     {Array.from({ length: 6 }).map((_, index) => (
                       <div key={index} className="animate-pulse bg-gray-200 rounded-xl p-6 h-32"></div>
                     ))}
@@ -261,107 +396,19 @@ const CareersContent = () => {
                     {category.name}
                   </h3>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {category.jobListings.map((role, index, arr) => {
-                      const remainder = arr.length % 3;
-                      const isSecondLast = index === arr.length - 2;
-                      const isLast = index === arr.length - 1;
-
-                      // Handle last 2 items when remainder is 2
-                      if (remainder === 2 && isSecondLast) {
-                        const lastTwo = [arr[arr.length - 2], arr[arr.length - 1]];
-                        return (
-                          <div key="last-two" className="lg:col-span-3 hidden lg:block">
-                            <div className="flex justify-center gap-4">
-                              {lastTwo.map((r, i) => (
-                                <div
-                                  key={i}
-                                  className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
-                                  style={{ animationDelay: `${(arr.length - 2 + i) * 0.05}s` }}
-                                >
-                                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                                    <div className="flex-1">
-                                      <h4 className="font-semibold text-gray-900 mb-2">{r.title}</h4>
-                                      <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(r.description)}</p>
-                                      <div className="mt-2 flex flex-wrap gap-1">
-                                        <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{r.experience}</span>
-                                        <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{r.location}</span>
-                                      </div>
-                                    </div>
-                                    <button
-                                      onClick={() => openModal(r.title)}
-                                      className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                                    >
-                                      Apply Now
-                                    </button>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      // Skip rendering for last item when remainder is 2 (handled above)
-                      if (remainder === 2 && isLast) {
-                        return null;
-                      }
-
-                      // Handle last 1 item when remainder is 1
-                      if (remainder === 1 && isLast) {
-                        return (
-                          <div key="last-one" className="lg:col-span-3 flex justify-center">
-                            <div
-                              className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 w-full max-w-md"
-                              style={{ animationDelay: `${index * 0.05}s` }}
-                            >
-                              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                                <div className="flex-1">
-                                  <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                                  <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-                                  <div className="mt-2 flex flex-wrap gap-1">
-                                    <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
-                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
-                                  </div>
-                                </div>
-                                <button
-                                  onClick={() => openModal(role.title)}
-                                  className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                                >
-                                  Apply Now
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      // Regular grid items
-                      return (
-                        <div
-                          key={index}
-                          className="animate-on-scroll bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                          style={{ animationDelay: `${index * 0.05}s` }}
-                        >
-                          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                            <div className="flex-1">
-                              <h4 className="font-semibold text-gray-900 mb-2">{role.title}</h4>
-                              <p className="text-gray-600 text-sm line-clamp-2">{truncateDescription(role.description)}</p>
-                              <div className="mt-2 flex flex-wrap gap-1">
-                                <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded">{role.experience}</span>
-                                <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{role.location}</span>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => openModal(role.title)}
-                              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm whitespace-nowrap"
-                            >
-                              Apply Now
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+                    {category.jobListings.map((role, index) => (
+                      <JobCard
+                        key={role.title}
+                        role={role}
+                        isExpanded={isJobExpanded(role.title)}
+                        onToggleExpansion={toggleJobExpansion}
+                        onApplyClick={openModal}
+                        animationDelay={`${index * 0.05}s`}
+                        renderFullDescription={renderFullDescription}
+                        getTruncatedDescription={getTruncatedDescription}
+                      />
+                    ))}
                   </div>
                 </div>
               );
@@ -513,6 +560,21 @@ const CareersContent = () => {
                       required
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
                       placeholder="Enter your email address"
+                    />
+                  </div>
+
+                  {/* Phone Number */}
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                      placeholder="Enter your phone number"
                     />
                   </div>
 
