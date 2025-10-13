@@ -6,7 +6,7 @@ description: Every executive has felt the sting of "cloud bill shock." You
   advice—"turn off unused instances" or "use reserved instances"—is a starting
   point, but it barely scratches the surface. Significant, sustainable savings
   come from addressing the deeper, systemic traps that teams fall into.
-icon: /images/guides/atek-logo-only.png
+icon: /images/guides/gemini_generated_image_be5g70be5g70be5g.png
 pdfFile: /downloads/guides/3-cloud-cost-traps-that-are-draining-your-budget-and-how-to-fix-them-.pdf
 published: true
 order: 3
